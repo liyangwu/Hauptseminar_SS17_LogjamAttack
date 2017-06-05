@@ -1,0 +1,9 @@
+- präzises Wissen über die technischen Details
+- beschreibe Algorithmen genau / Analyse
+
+- weniger die empirische Auswertung erklären
+
+Aufbau:
+- von wichtig nach unwichtig
+- beginne mit angriff
+- dann nacheinander algorithmen erklären / prioritäten setzen

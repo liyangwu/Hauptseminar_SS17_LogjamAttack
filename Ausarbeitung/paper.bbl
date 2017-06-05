@@ -1,0 +1,16 @@
+\begin{thebibliography}{}
+
+\bibitem[Adrian et~al., 2015]{Adrian:2015:IFS:2810103.2813707}
+Adrian, D., Bhargavan, K., Durumeric, Z., Gaudry, P., Green, M., Halderman,
+  J.~A., Heninger, N., Springall, D., Thom{\'e}, E., Valenta, L., VanderSloot,
+  B., Wustrow, E., Zanella-B{\'e}guelin, S., and Zimmermann, P. (2015).
+\newblock Imperfect forward secrecy: How diffie-hellman fails in practice.
+\newblock In {\em Proceedings of the 22Nd ACM SIGSAC Conference on Computer and
+  Communications Security}, CCS '15, pages 5--17, New York, NY, USA. ACM.
+
+\bibitem[Diffie and Hellman, 1976]{diffie1976new}
+Diffie, W. and Hellman, M. (1976).
+\newblock New directions in cryptography.
+\newblock {\em IEEE transactions on Information Theory}, 22(6):644--654.
+
+\end{thebibliography}

@@ -1,0 +1,189 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Short Sectioned Assignment
+% LaTeX Template
+% Version 1.0 (5/5/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% Frits Wenneker (http://www.howtotex.com)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%----------------------------------------------------------------------------------------
+
+\documentclass[paper=a4, fontsize=11pt]{scrartcl} % A4 paper and 11pt font size
+
+\usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
+\usepackage{palatino} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
+\usepackage[english]{babel} % English language/hyphenation
+\usepackage{amsmath,amsfonts,amsthm,stmaryrd} % Math packages
+\usepackage{url}
+
+\usepackage{sectsty} % Allows customizing section commands
+\allsectionsfont{\centering \normalfont\scshape} % Make all sections centered, the default font and small caps
+
+\usepackage{fancyhdr} % Custom headers and footers
+
+\usepackage{listings}% http://ctan.org/pkg/listings
+\lstset{
+	basicstyle=\ttfamily,
+	mathescape
+}
+
+\usepackage[square]{natbib}
+
+\pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
+\fancyhead{} % No page header - if you want one, create it in the same way as the footers below
+\fancyfoot[L]{} % Empty left footer
+\fancyfoot[C]{} % Empty center footer
+\fancyfoot[R]{\thepage} % Page numbering for right footer
+\renewcommand{\headrulewidth}{0pt} % Remove header underlines
+\renewcommand{\footrulewidth}{0pt} % Remove footer underlines
+\setlength{\headheight}{13.6pt} % Customize the height of the header
+
+\numberwithin{equation}{section} % Number equations within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{figure}{section} % Number figures within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+\numberwithin{table}{section} % Number tables within sections (i.e. 1.1, 1.2, 2.1, 2.2 instead of 1, 2, 3, 4)
+
+%\setlength\parindent{0pt} % Removes all indentation from paragraphs - comment this line for an assignment with lots of text
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} % Create horizontal rule command with 1 argument of height
+
+\title{	
+\normalfont \normalsize 
+\textsc{University of Stuttgart} \\ [25pt] % Your university, school and/or department name(s)
+\horrule{0.5pt} \\[0.4cm] % Thin top horizontal rule
+\huge Hauptseminar:\\The Logjam Attack \\ % The assignment title
+\horrule{2pt} \\[0.5cm] % Thick bottom horizontal rule
+}
+
+\author{Li Yang Wu} % Your name
+
+\date{\normalsize\today} % Today's date or a custom date
+
+\begin{document}
+
+\maketitle % Print the title
+
+\tableofcontents
+
+\newpage
+
+%----------------------------------------------------------------------------------------
+%	ABSTRACT
+%----------------------------------------------------------------------------------------
+\section*{Abstract}
+\begin{abstract}
+\citep{Adrian:2015:IFS:2810103.2813707} developed a new attack called Logjam to break many cryptographic systems using the Diffie-Hellman key exchange mechanism. This review elucidates its technical details and summarize overall results of their paper.
+\end{abstract}
+%----------------------------------------------------------------------------------------
+%	INTRODUCTION
+%----------------------------------------------------------------------------------------
+\section{Introduction}
+If it comes to network security, the Diffie-Hellman key exchange is the standard wildly used in practice and declared to be safe. However, \citep{Adrian:2015:IFS:2810103.2813707} could break the security on many popular and browser certified websites. They demonstrated this so called Logjam attack on the Transfer Level Security protocol that supports Diffe-Hellman as key exchange. They also implemented an attack exploiting weak and misconfigured groups using the Pohling-Hellman algorithm.
+
+The second result the authors present is an estimate on cost of computing logs from key sizes of 1024 bits. I will briefly summarize their assumptions for the estimate and the results.
+%----------------------------------------------------------------------------------------
+%	Diffie-Hellman Key Exchange
+%----------------------------------------------------------------------------------------
+\section{Diffie-Hellman Key Exchange}
+\citep{diffie1976new} was the first paper presenting a practical solution to the privacy and the authentication problem that does not rely on secure communication channels. These kinds of channels are often not given or so inefficient to use that the benefit of telecommunication is nullified. Hence, it was a historical and great advance in computer networking and cryptography. They presented an asymmetric approach with trap door functions that have an exponential cipher-cryptanalyst ratio. Because of this, a security system can choose feasible large private keys that are at the same time infeasible to infer from public keys and encrypted messages w.r.t. computation time.
+\subsection{Problem Formulation}
+Given:
+\begin{itemize}
+	\item $A, B$, the communication partners.
+	\item Only insecure communication channels are available.
+	\item $\{M\}$, a finite message space which contain all possible messages $M$ to be exchanged.
+\end{itemize}
+Determine:
+\begin{itemize}
+	\item $C = (\{E_K\}_{K\in\{K\}}, \{D_K\}_{K\in\{K\}})$, a \textit{public key cryptosystem} with mutual inverse functions
+	\begin{itemize}
+		\item $E_K:\{M\}\rightarrow\{M\}$
+		\item $D_K:\{M\}\rightarrow\{M\}$
+	\end{itemize}
+	denoted as \textit{encryption} and \textit{decryption transformation} respectively.
+	\item $\{K\}$, a suitable set of keys.
+	\item Such that
+	\begin{enumerate}
+	\item $\forall K\in\{K\}:M = D_K(E_K(M))$
+	\item $\forall K\in\{K\},M\in\{M\}:E_K(M), D_K(M)$ are easy to compute.
+	\item $\forall^\infty K\in\{K\},\alpha:\{E_K\}_{K\in\{K\}}\rightarrow \{D_K\}_{K\in\{K\}}:D_K = \alpha(E_K)$ is infeasible to compute.
+	\item $\forall K\in\{K\}\exists\beta:\{K\}\rightarrow(\{E_K\}_{K\in\{K\}}, \{D_K\}_{K\in\{K\}}):\beta(K) = (E_K,D_K)$ is feasible to compute.
+	\end{enumerate}
+\end{itemize}
+
+\subsection{Solutions}
+\paragraph{Key Exchange}
+The solution the authors propose is to draw private and public keys $(D,E)$ from finite fields of sizes equal to prime numbers $\mathrm{GF}(q)\cong\mathbb{Z}/q\mathbb{Z}$, i.e.
+\begin{equation}
+D, E \in \mathrm{GF}(q) = \{x \mod q \mid x \in \mathbb{Z}\}.
+\end{equation}
+By choosing the private key as the logarithm of the public key and an arbitrary basis $\alpha \in \mathrm{GF}(q)$,
+\begin{eqnarray}
+D = \alpha^E\mod q,\\
+E = \log_\alpha Y \mod q,\\
+1 \leq D,E \leq q-1,
+\end{eqnarray}
+the requirements 3. and 4. are fulfilled. Calculating $D$ from $E$ has logarithmic time complexity in $q$. Inversely, calculating $E$ from $D$ has a complexity of $\sqrt{q}$. Therefore the cipher-cryptanalyst ratio is exponential. Note that this is not a proven bound. We use the best known algorithms for these problem to get this ratio. Better algorithms have not been found for decades, therefore this method is considered safe. Also, one need to find good primes $q$ in order to assure worst or near worst case log-computation time.
+
+Now if $A$ and $B$ want to exchange a session key, they first choose public and private keys $D_A$, $D_B$, $E_A$, $E_B$ with a $q$ of sufficient size and exchange their public keys over the insecure communication channel. Then, they can calculate the common session key
+\begin{eqnarray}
+K_{A,B} & = & \alpha^{E_AE_B} \mod q\\
+& = & (\alpha^{E_A})^{E_B} \mod q\\
+& = & {D_A}^{E_B} \mod q\label{eqn:keyA}\\
+& = & (\alpha^{E_B})^{E_A} \mod q\\
+& = & {D_B}^{E_A} \mod q.\label{eqn:keyB}
+\end{eqnarray}
+While $A$ calculates the right term in \ref{eqn:keyA}, $B$ calculates the right term in \ref{eqn:keyB} and both of them have now the same session key $K_{A,B}$.
+
+The trap-door property of this mechanism allows us to use it for one-way authentication. A signature $s$ of some user $A$ is $D_A(s)$. No one can forge it, since $D_A$ is private. $A$ cannot deny his or her signature, since everyone can confirm $E_A(D_A(s)) = s$.
+
+\paragraph{Cryptanalysis}
+The attacker can compute $K_{A,B}$ either by computing $E_A$ from $D_B$ or $E_B$ from $D_A$, both are log-problems in finite fields. Thus, the attacker is successful, iff he or she can effort exponentially more computation power that $A$ and $B$.
+
+%----------------------------------------------------------------------------------------
+%	Number Field Sieve Algorithm
+%----------------------------------------------------------------------------------------
+\section{Number Field Sieve Algorithm}
+
+
+%----------------------------------------------------------------------------------------
+%	The Logjam Attack
+%----------------------------------------------------------------------------------------
+\section{The Logjam Attack}
+
+
+
+%----------------------------------------------------------------------------------------
+%	Other Attacks
+%----------------------------------------------------------------------------------------
+\section{Other Attacks}
+
+%----------------------------------------------------------------------------------------
+%	Other Attacks
+%----------------------------------------------------------------------------------------
+\section{Pohling-Hellman Algorithm}
+
+%----------------------------------------------------------------------------------------
+%	DISCUSSION
+%----------------------------------------------------------------------------------------
+\section{Discussion}
+TODO
+%------------------------------------------------
+
+\newpage
+\bibliographystyle{apalike}
+\bibliography{literature}
+\end{document}
