@@ -6,7 +6,17 @@
 \contentsline {paragraph}{\nonumberline Key Exchange}{3}
 \contentsline {paragraph}{\nonumberline Cryptanalysis}{4}
 \contentsline {section}{\numberline {3}Number Field Sieve Algorithm}{4}
-\contentsline {section}{\numberline {4}The Logjam Attack}{4}
-\contentsline {section}{\numberline {5}Other Attacks}{4}
-\contentsline {section}{\numberline {6}Pohling-Hellman Algorithm}{4}
-\contentsline {section}{\numberline {7}Discussion}{4}
+\contentsline {subsection}{\numberline {3.1}Approach}{4}
+\contentsline {subsection}{\numberline {3.2}Precomputation}{4}
+\contentsline {subsubsection}{\numberline {3.2.1}Smoothness Assumption}{4}
+\contentsline {subsubsection}{\numberline {3.2.2}Polynomial Selection}{5}
+\contentsline {subsubsection}{\numberline {3.2.3}Sieving}{5}
+\contentsline {subsubsection}{\numberline {3.2.4}Linear Algebra}{5}
+\contentsline {paragraph}{\nonumberline Step 1}{6}
+\contentsline {paragraph}{\nonumberline Step 2}{6}
+\contentsline {paragraph}{\nonumberline Step 3}{6}
+\contentsline {paragraph}{\nonumberline Step 4}{6}
+\contentsline {section}{\numberline {4}The Logjam Attack}{7}
+\contentsline {section}{\numberline {5}Other Attacks}{7}
+\contentsline {section}{\numberline {6}Pohling-Hellman Algorithm}{7}
+\contentsline {section}{\numberline {7}Discussion}{7}

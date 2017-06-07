@@ -13,4 +13,20 @@ Diffie, W. and Hellman, M. (1976).
 \newblock New directions in cryptography.
 \newblock {\em IEEE transactions on Information Theory}, 22(6):644--654.
 
+\bibitem[Gordon, 1993]{gordon1993discrete}
+Gordon, D.~M. (1993).
+\newblock Discrete logarithms in gf(p) using the number field sieve.
+\newblock {\em SIAM Journal on Discrete Mathematics}, 6(1):124--138.
+
+\bibitem[Joux and Lercier, 2003]{joux2003improvements}
+Joux, A. and Lercier, R. (2003).
+\newblock Improvements to the general number field sieve for discrete
+  logarithms in prime fields. a comparison with the gaussian integer method.
+\newblock {\em Mathematics of computation}, 72(242):953--967.
+
+\bibitem[Wiedemann, 1986]{wiedemann1986solving}
+Wiedemann, D. (1986).
+\newblock Solving sparse linear equations over finite fields.
+\newblock {\em IEEE transactions on information theory}, 32(1):54--62.
+
 \end{thebibliography}

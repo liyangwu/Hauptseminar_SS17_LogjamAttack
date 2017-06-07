@@ -23,7 +23,7 @@
 \usepackage[T1]{fontenc} % Use 8-bit encoding that has 256 glyphs
 \usepackage{palatino} % Use the Adobe Utopia font for the document - comment this line to return to the LaTeX default
 \usepackage[english]{babel} % English language/hyphenation
-\usepackage{amsmath,amsfonts,amsthm,stmaryrd} % Math packages
+\usepackage{amsmath,amsfonts,amsthm,stmaryrd,amssymb} % Math packages
 \usepackage{url}
 
 \usepackage{sectsty} % Allows customizing section commands
@@ -157,7 +157,112 @@ The attacker can compute $K_{A,B}$ either by computing $E_A$ from $D_B$ or $E_B$
 %	Number Field Sieve Algorithm
 %----------------------------------------------------------------------------------------
 \section{Number Field Sieve Algorithm}
+As described above, the only known way to break Diffie-Hellman is to compute $E$ from $D$, i.e. to compute discrete logs for prime fields for a fixed prime $q$ and base $\alpha$. \citep{gordon1993discrete} first proposed how the \textit{number field sieve} (NFS) algorithm can be used to compute discrete logs. Before that, this technique was known to solve the factorization problem for large primes.
 
+\subsection{Approach}
+The idea is to factorize $D$ and find logs for each of these factors. The logs of these factors can be constructed by the logs of some precomputed logs in the database. This step can be done very efficiently. The difficult problem is to build up such a database for the prime of interest $q$. But the good thing is that this precomputation only depends on $q$ and not on a specific problem instance $D$. Once the precomputation is done, the database can be used to compute the log for every $D\in \mathrm{GF}(q)$.
+
+\subsection{Precomputation}
+
+\subsubsection{Smoothness Assumption}
+Define that an integer number $x$ is $B$-smooth, if all prime factors of $x$ are smaller that $B$. NFS assumes the base $\alpha$ to be $B$-smooth where $B$ is a upper bound for the prime values in the factor base (which is the output of the precomputation). If $\alpha$ is not $B$-smooth, we can use a $B$-smooth $\alpha'$ instead. Then, we can compute $\log_{\alpha'}\alpha$ and transform back to the original problem with
+\begin{equation}
+\log_\alpha D\equiv\frac{\log_{\alpha'}D}{\log_{\alpha'}\alpha}\mod (q-1)
+\text{ .}
+\end{equation}
+If $\alpha'$ is not a generator for $\mathrm{GF}(q)^*$, the logs on the right hand side might not exist. $\alpha'$ can be checked for feasibility by factoring $(q-1)$ with the NFS factoring algorithm and check
+\begin{equation}
+(a')^{\frac{q-1}{p}} \not\equiv 1 \mod q,\quad\forall p\parallel q
+\text{ ,}
+\end{equation}
+where $p\parallel q$ denotes that $p$ is a prime divisor of $q$. The reason why $\alpha'$ needs to be $B$-Smooth is that the factor base needs to have at least one inhomogeneous relation for the logs of the factor base, using the equation
+\begin{eqnarray}
+log_\alpha\alpha = 1 \equiv \sum_{p^t\parallel a}t\log_\alpha p \mod (q-1)
+\text{ ,}
+\end{eqnarray}
+otherwise we gain no knowledge from the factor base.
+
+\subsubsection{Polynomial Selection}
+The goal in this step to find a polynomial representation of $\mathrm{GF}(q)$. This has the advantage that we can express relations and encode informations in terms of linear equations to reason about them, which are the tasks that actually will be done in the next steps.
+
+First, we represent $\mathrm{GF}(q)$ as $\mathbb{Z}/q\mathbb{Z}$ where elements are identified with their least non-negative residues. Then, choose and integer $m$ and polynomial $f:\mathbb{Z}\rightarrow\mathbb{Z}$ of degree $k$ such that $f$ is monic, irreducible over $\mathbb{Q}$ and $f(m)\equiv 0 \mod q$. We can find such a polynomial $f$ by choosing $m$ of suitable size and find coefficients $a_1,...,a_k$ such that
+\begin{eqnarray}
+p = \sum_{i=0}^{k}a_im^i
+\text{ .}
+\end{eqnarray}
+It is required that $q\nmid\Delta_f$, where $\Delta_f$ is the discriminant of $f$. If the choice of $f$ or $m$ leads to $q\mid\Delta_f$, then try another $m$ or alter $f$ slightly, for example add $m$ to $a_i$ and subtract $1$ from $a_{i+1}$.
+
+Next, let $\gamma\in\mathbb{C}$ be the root of $f$, define $K = \mathbb{Q}(\gamma) = \mathbb{Q}\cup\{\gamma\}$ and $O_K$ the ring of integers in $K$. Since $(q,\Delta_f) = 1$, $\hat{q}:=(q,\gamma-m)$ is a first-degree prime factor of $q\in O_K$. It follows that $O_K/\hat{q}\cong\mathrm{GF}(q)$ and we can define a homomorphism $\phi:\mathbb{Z}[\alpha]\rightarrow\mathbb{Z}/q\mathbb{Z}$, providing us the representation we aimed for. We denote a prime ideal $s\in O_K$ as \textit{good} if $s$ does not divide the index $[O_K:\mathbb{Z}[\gamma]]$, otherwise \textit{bad}.
+
+The actual factor base $\mathcal{B}$ for which we want to find the logarithms consists of two parts: $\mathcal{B}_\mathbb{Q}$ the set of rational primes and $\mathcal{B}_K$ the set of good prime ideals in $O_K$, where $p,\Vert p'\Vert_1\leq B,\ \forall p\in\mathcal{B}_\mathbb{Q},p'\in\mathcal{B}_K$. Note that $B$ is the same bound for our base $\alpha$ (from our primary problem definition: Find $E$ for $D=\alpha^E\mod q$). Also, let $\mathcal{B}'\subset\mathcal{B}_\mathbb{Q}$ denote the set of prime factors of $\alpha$.
+
+\subsubsection{Sieving}
+
+\subsubsection{Linear Algebra}
+Given some matrix $A = \mathbb{Z}^{S\times T},\ S > T$, where each row has at most $E$ non-zero entries, find a linear relation over $\mathbb{Q}$ for the rows of $A$. This is accomplished in four steps, shown for the case $S=T+1$. This procedure was developed by Carl Pomerance (*1944) which was not separately published, instead only for helping out in \citep{gordon1993discrete}.
+\paragraph{Step 1}Attempt to compute the rank $r = \mathrm{rk}(A)$. For that, choose a random prime $q_0\leq ET\log T$. Later, we will check if that choice was feasible. If not, come back here and sample another one. Then, use Gaussian elimination mod $q_0$ to find the rank $r_0$ of $A\mod q_0$. Rearrange the rows so that the first $r_0$ rows are linearly independent mod $q_0$. Now the rearranged matrix is
+\begin{equation}
+A' =
+\begin{pmatrix}
+v_1\\v_2\\\vdots\\v_{T\!+\!1}
+\end{pmatrix}
+=
+\begin{pmatrix}
+a'_{11} & a'_{12} & \cdots & a'_{1T} \\
+a'_{21} & a'_{22} & \cdots & a'_{2T} \\
+\vdots & \vdots & \ddots & \vdots \\
+a'_{T\!+\!11} & a'_{T\!+\!12} & \cdots & a'_{T\!+\!1T} \\
+\end{pmatrix}
+\text{ .}
+\end{equation}
+The result of the Gaussian elimination provide a submatrix $\hat{A} = \mathbb{Z}^{r_0\times r_0}$ of the first $r_0$ rows that is nonsingular mod $q_0$,
+\begin{equation}
+\hat{A} =
+\begin{pmatrix}
+v_1\\v_2\\\vdots\\v_{r_0}
+\end{pmatrix}
+=
+\begin{pmatrix}
+a'_{11} & a'_{12} & \cdots & a'_{1r_0} \\
+a'_{21} & a'_{22} & \cdots & a'_{2r_0} \\
+\vdots & \vdots & \ddots & \vdots \\
+a'_{r_01} & a'_{r_02} & \cdots & a'_{r_0r_0} \\
+\end{pmatrix}
+\text{ .}
+\end{equation}
+\paragraph{Step 2} Attempt to express $v_{r_0+1}$ as a linear combination of $v_1,v_2,...,v_{r_0}\mod q$ for each $q\leq ET\log T$. For some $q$ it will be successful, for others not. Denote the product of all successful primes as $\boldsymbol{P}$ and the product of all unsuccessful primes as $\boldsymbol{P'}$. If $\boldsymbol{P'} > ET\log T$, then repeat Step 1 (sample a new random prime number). Otherwise, continue with the next step.
+\paragraph{Step 3} Attempt to find the determinant $D$ of $\hat{A}$. For each prime $q|\boldsymbol{P}$, use the Wieldemann's probabilistic determinant algorithm \citep{wiedemann1986solving} to compute an integer $D_q\in\{0,...,q-1\}$, which is the determinant of $A\mod q$ with probability of at least $1-(ET)^{-2}$, i.e.
+\begin{equation}
+\mathbb{P}(D_q = \det(A\mod q)\mid A,q) \geq 1-(ET)^{-2}
+\text{ .}
+\end{equation}
+For each $D_q$ we can write an congruence
+\begin{equation}
+D_0 \equiv D_q \mod q,\quad\forall q|\boldsymbol{P}
+\end{equation}
+and use the Chinese remainder theorem to compute $D_0$ fulfilling these congruences and being closest to zero. Repeat this step until we have found a value that lies within the bound
+\begin{equation}
+0 < |D_0| \leq (E^{\frac{1}{2}}T)^T
+\text{ .}
+\end{equation}
+
+\paragraph{Step 4} In the final step we try to find the actual coefficients $c_1,...,c_{r_0}$ for the linear relation between $v_{r_0+1}$ and the rest of the rows. Again, use the Chinese remainder theorem to find these coefficients closest to zero such that
+\begin{equation}
+D_0v_{r_0+1}\equiv\sum_{i=1}^{r_0}c_iv_i\mod\boldsymbol{P}
+\text{ .}
+\end{equation}
+In case one of these coefficients $c_i$ exceeds $(E^{\frac{1}{2}}T)^T$ in absolute value, repeat Step 3 to find another $D_0$. Otherwise, we have found the relation
+\begin{equation}
+D_0v_{r_0+1}=\sum_{i=1}^{r_0}c_iv_i
+\text{ .}
+\end{equation}
+It can also be shown that the expected runtime of this algorithm is
+\begin{equation}
+\mathcal{O}(E^2T^3\log^3T)
+\text{ .}
+\end{equation}
+
+Note that improved versions of this algorithm exist, such as \citep{joux2003improvements}.
 
 %----------------------------------------------------------------------------------------
 %	The Logjam Attack
