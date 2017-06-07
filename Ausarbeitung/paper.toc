@@ -1,22 +1,23 @@
 \select@language {english}
-\contentsline {section}{\numberline {1}Introduction}{2}
-\contentsline {section}{\numberline {2}Diffie-Hellman Key Exchange}{2}
-\contentsline {subsection}{\numberline {2.1}Problem Formulation}{2}
-\contentsline {subsection}{\numberline {2.2}Solutions}{3}
-\contentsline {paragraph}{\nonumberline Key Exchange}{3}
-\contentsline {paragraph}{\nonumberline Cryptanalysis}{4}
-\contentsline {section}{\numberline {3}Number Field Sieve Algorithm}{4}
-\contentsline {subsection}{\numberline {3.1}Approach}{4}
-\contentsline {subsection}{\numberline {3.2}Precomputation}{4}
-\contentsline {subsubsection}{\numberline {3.2.1}Smoothness Assumption}{4}
-\contentsline {subsubsection}{\numberline {3.2.2}Polynomial Selection}{5}
-\contentsline {subsubsection}{\numberline {3.2.3}Sieving}{5}
-\contentsline {subsubsection}{\numberline {3.2.4}Linear Algebra}{5}
-\contentsline {paragraph}{\nonumberline Step 1}{6}
-\contentsline {paragraph}{\nonumberline Step 2}{6}
-\contentsline {paragraph}{\nonumberline Step 3}{6}
-\contentsline {paragraph}{\nonumberline Step 4}{6}
-\contentsline {section}{\numberline {4}The Logjam Attack}{7}
-\contentsline {section}{\numberline {5}Other Attacks}{7}
-\contentsline {section}{\numberline {6}Pohling-Hellman Algorithm}{7}
-\contentsline {section}{\numberline {7}Discussion}{7}
+\contentsline {section}{\numberline {1}Introduction}{3}
+\contentsline {section}{\numberline {2}Diffie-Hellman Key Exchange}{3}
+\contentsline {subsection}{\numberline {2.1}Problem Formulation}{3}
+\contentsline {subsection}{\numberline {2.2}Solutions}{4}
+\contentsline {paragraph}{\nonumberline Key Exchange}{4}
+\contentsline {paragraph}{\nonumberline Cryptanalysis}{5}
+\contentsline {section}{\numberline {3}Number Field Sieve Algorithm}{5}
+\contentsline {subsection}{\numberline {3.1}Approach}{5}
+\contentsline {subsection}{\numberline {3.2}Precomputation}{5}
+\contentsline {subsubsection}{\numberline {3.2.1}Smoothness Assumption}{5}
+\contentsline {subsubsection}{\numberline {3.2.2}Polynomial Selection}{6}
+\contentsline {subsubsection}{\numberline {3.2.3}Sieving}{6}
+\contentsline {subsubsection}{\numberline {3.2.4}Linear Algebra}{7}
+\contentsline {paragraph}{\nonumberline Step 1}{7}
+\contentsline {paragraph}{\nonumberline Step 2}{8}
+\contentsline {paragraph}{\nonumberline Step 3}{8}
+\contentsline {paragraph}{\nonumberline Step 4}{8}
+\contentsline {subsubsection}{\numberline {3.2.5}Results}{9}
+\contentsline {section}{\numberline {4}The Logjam Attack}{9}
+\contentsline {section}{\numberline {5}Other Attacks}{9}
+\contentsline {section}{\numberline {6}Pohling-Hellman Algorithm}{9}
+\contentsline {section}{\numberline {7}Discussion}{9}
