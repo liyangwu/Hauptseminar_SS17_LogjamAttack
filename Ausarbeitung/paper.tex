@@ -162,10 +162,13 @@ As described above, the only known way to break Diffie-Hellman is to compute $E$
 \subsection{Approach}
 The idea is to factorize $D$ and find logs for each of these factors. The logs of these factors can be constructed by the logs of some precomputed logs in the database. This step can be done very efficiently. The difficult problem is to build up such a database for the prime of interest $q$. But the good thing is that this precomputation only depends on $q$ and not on a specific problem instance $D$. Once the precomputation is done, the database can be used to compute the log for every $D\in \mathrm{GF}(q)$.
 
+The algorithm for NFS in general is technically difficult to understand. That means there are many mathematical objects we must deal with and keep in mind at the same time. For simplicity I neglected some details for a better reading, while the drawback is that I need to refer to the original paper from time to time.
+
 \subsection{Precomputation}
+The precomputation consists of three steps. In Polynomial Selection, we find an appropriate representation for $\mathrm{GF}(q)$. Using this representation, we find equations that relate certain numbers with smaller primes in $\mathrm{GF}(q)$ in the Sieving step. These equations form matrices that can be used to find relations that lead to the logs of the base $\alpha$ in the Linear Algebra step. But first, one assumption must be made on $\alpha$.
 
 \subsubsection{Smoothness Assumption}
-Define that an integer number $x$ is $B$-smooth, if all prime factors of $x$ are smaller that $B$. NFS assumes the base $\alpha$ to be $B$-smooth where $B$ is a upper bound for the prime values in the factor base (which is the output of the precomputation). If $\alpha$ is not $B$-smooth, we can use a $B$-smooth $\alpha'$ instead. Then, we can compute $\log_{\alpha'}\alpha$ and transform back to the original problem with
+Define that an integer number $x$ is $B$-smooth, if all prime factors of $x$ are smaller that $B$. NFS assumes the base $\alpha$ to be $B$-smooth where $B$ is an upper bound for the prime values in the factor base (which is the output of the precomputation). If $\alpha$ is not $B$-smooth, we can use a $B$-smooth $\alpha'$ instead. Then, we can compute $\log_{\alpha'}\alpha$ and transform back to the original problem with
 \begin{equation}
 \log_\alpha D\equiv\frac{\log_{\alpha'}D}{\log_{\alpha'}\alpha}\mod (q-1)
 \text{ .}
@@ -184,7 +187,7 @@ where $p\parallel q$ denotes that $p$ is a prime divisor of $q$. The reason why 
 otherwise we gain no knowledge from the factor base.
 
 \subsubsection{Polynomial Selection}
-The goal in this step to find a polynomial representation of $\mathrm{GF}(q)$. This has the advantage that we can express relations and encode informations in terms of linear equations to reason about them, which are the tasks that actually will be done in the next steps.
+The goal in the first step is to find a polynomial representation of $\mathrm{GF}(q)$. This has the advantage that we can express relations and encode informations in terms of linear equations to reason about them, which are the tasks that actually will be done in the next steps.
 
 First, we represent $\mathrm{GF}(q)$ as $\mathbb{Z}/q\mathbb{Z}$ where elements are identified with their least non-negative residues. Then, choose and integer $m$ and polynomial $f:\mathbb{Z}\rightarrow\mathbb{Z}$ of degree $k$ such that $f$ is monic, irreducible over $\mathbb{Q}$ and $f(m)\equiv 0 \mod q$. We can find such a polynomial $f$ by choosing $m$ of suitable size and find coefficients $a_1,...,a_k$ such that
 \begin{eqnarray}
@@ -198,7 +201,7 @@ Next, let $\gamma\in\mathbb{C}$ be the root of $f$, define $K = \mathbb{Q}(\gamm
 The actual factor base $\mathcal{B}$ for which we want to find the logarithms consists of two parts: $\mathcal{B}_\mathbb{Q}$ the set of rational primes and $\mathcal{B}_K$ the set of good prime ideals in $O_K$, where $p,\Vert p'\Vert_1\leq B,\ \forall p\in\mathcal{B}_\mathbb{Q},p'\in\mathcal{B}_K$. Note that $B$ is the same bound for our base $\alpha$ (from our primary problem definition: Find $E$ for $D=\alpha^E\mod q$). Also, let $\mathcal{B}'\subset\mathcal{B}_\mathbb{Q}$ denote the set of prime factors of $\alpha$.
 
 \subsubsection{Sieving}
-In this step we try to find linear equations that are informative in a sense that they are related to the the logarithms in $\mathcal{B}$. For that, sieve through integer pairs $(c,d)$ that are co-prime for which $c+dm$ and $c+d\gamma$ are $S$-smooth where $S = \prod_{s\in\mathcal{B}_\mathbb{Q}}$. For this smoothness criteria, we can formulate equations
+In this step we try to find linear equations that are informative in the sense that they are related to the the logarithms in $\mathcal{B}$. For that, sieve through integer pairs $(c,d)$ that are co-prime for which $c+dm$ and $c+d\gamma$ are $S$-smooth where $S = \prod_{s\in\mathcal{B}_\mathbb{Q}}$. For this smoothness criteria, we can formulate equations
 \begin{eqnarray}
 c+dm = \prod_{s\in\mathcal{B}_\mathbb{Q}}s^{w_s(c,d)}
 \end{eqnarray}
@@ -220,10 +223,10 @@ and
 c+d\gamma = \prod_{\hat{s}\in\mathcal{B}_K}\hat{s}^{v_{\hat{s}}(c,d)}
 \text{ .}
 \end{eqnarray}
-We repeats the steps described so far, which means, try to find more pairs $(c,d)$ to build equations \ref{eqnSieve1} and \ref{eqnSieve2} until we have at least $|\mathcal{B}|$ of these equations. These are now used to form a large matrix $A$, where its rows are the $w_s$'s and $v_{\hat{s}}$'s for each equation. From $A$ we extract only those columns where elements are in $\mathcal{B}-\mathcal{B}'$, forming a new matrix $A'$. This means, we are only interested in solutions for primes $s\in\mathcal{B}'$. $A'$ is now the input for the next stage.
+Repeats the steps described so far to find more pairs $(c,d)$ to build equations \ref{eqnSieve1} and \ref{eqnSieve2} until we have at least $|\mathcal{B}|$ of these equations. For each equation, build a matrix, where its rows are the $w_s$'s and $v_{\hat{s}}$'s, we call this set $\mathcal{A}$. We modify $\mathcal{A}$ by extracting only those columns where elements are in $\mathcal{B}-\mathcal{B}'$. This means, we are only interested in solutions for primes $s\in\mathcal{B}'$. $\mathcal{A}$ is now the input for the next step.
 
 \subsubsection{Linear Algebra}
-Given some matrix $A = \mathbb{Z}^{S\times T},\ S > T$, where each row has at most $E$ non-zero entries, find a linear relation over $\mathbb{Q}$ for the rows of $A$. This is accomplished in four steps, shown for the case $S=T+1$. This procedure was developed by Carl Pomerance (*1944) which was not separately published, instead only for helping out in \citep{gordon1993discrete}.
+For each $A \in \mathcal{A},\ A = \mathbb{Z}^{S\times T},\ S > T$, where each row has at most $E$ non-zero entries, find a linear relation over $\mathbb{Q}$ for the rows of $A$. This is accomplished in four steps, shown for the case $S=T+1$. This procedure was developed by Carl Pomerance (*1944) which was not separately published, instead only for helping out in \citep{gordon1993discrete}.
 \paragraph{Step 1}Attempt to compute the rank $r = \mathrm{rk}(A)$. For that, choose a random prime $q_0\leq ET\log T$. Later, we will check if that choice was feasible. If not, come back here and sample another one. Then, use Gaussian elimination mod $q_0$ to find the rank $r_0$ of $A\mod q_0$. Rearrange the rows so that the first $r_0$ rows are linearly independent mod $q_0$. Now the rearranged matrix is
 \begin{equation}
 A' =
@@ -289,19 +292,19 @@ It can also be shown that the expected runtime of this algorithm is
 \subsubsection{Results}
 Here I sum up the final result not showing details, as it needs more technical preparations that I neglected for simplicity. Feel free to look at the original paper for a complete derivation of the solution.
 
-After applying the algorithm described in the Linear Algebra step on the matrix resulted form the Sieving step, we have some new equations
+After applying the algorithm described in the Linear Algebra step on the matrices resulted form the Sieving step, we have some new equations
 \begin{equation}
 \prod_{(c,d)}(c+dm)^{x(c,d)} = U
 \textit{ ,}
 \end{equation}
-where $x(c,d)$ are some newly computed integers and $U$ is a unit in $O_K$. After some intermediate steps, we can express the logs of primes $s\in\mathcal{B}$ as $z_s$ (which is here a black box) and state
+where $x(c,d)$ is the solution for the matrix constructed from $(c,d)$ and $U$ is a unit in $O_K$. After some intermediate steps, we can express the logs of primes $s\in\mathcal{B}$ as $z_s$ (which is a black box here) and state
 \begin{equation}
 \prod_{s\in\mathcal{B}'}s^{z_s}\equiv 1\mod q
 \text{ .}
 \end{equation}
 Taking the log, we have
 \begin{equation}
-\sum_{s\in\mathcal{B}'}\log_\alpha s \equiv 0 \mod (q-1)
+\sum_{s\in\mathcal{B}'}z_s\log_\alpha s \equiv 0 \mod (q-1)
 \text{ .}
 \end{equation}
 With more than $|\mathcal{B}'|$ such congruences, we can solve these with equation \ref{eqn:assumption} and obtain the logs for all primes $s\in\mathcal{B}'$.

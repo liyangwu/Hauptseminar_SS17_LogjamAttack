@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.5.12)  7 JUN 2017 18:05
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.5.12)  12 JUN 2017 15:05
 entering extended mode
 **paper.tex
 
@@ -348,7 +348,7 @@ LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <10.95> not available
 [5] [6] [7]
 
 LaTeX Font Warning: Font shape `U/stmry/b/n' undefined
-(Font)              using `U/stmry/m/n' instead on input line 257.
+(Font)              using `U/stmry/m/n' instead on input line 260.
 
 [8] [9]
 ("C:\Users\li_of_000\Dropbox\Uni\Master 4\Hauptseminar 2\Hauptseminar_SS17_Logj
@@ -386,7 +386,7 @@ nts/type1/public/amsfonts/symbols/msbm10.pfb><C:/Program Files (x86)/MiKTeX 2.9
 /type1/urw/palatino/uplb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/u
 rw/palatino/uplr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/palat
 ino/uplri8a.pfb>
-Output written on paper.pdf (10 pages, 208423 bytes).
+Output written on paper.pdf (10 pages, 209067 bytes).
 PDF statistics:
  108 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
