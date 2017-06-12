@@ -311,6 +311,28 @@ With more than $|\mathcal{B}'|$ such congruences, we can solve these with equati
 
 Note that improved versions of this algorithm exist, such as \citep{joux2003improvements}.
 
+\subsection{Individual Log Calculation}
+Now that we have our database ready, we can calculate a private key $E$ given $D$. The first step is to find a sort of a decomposition of $D$ by sampling random integers $l\in{1,..,q-1}$ until we have found an $l$ that satisfies
+\begin{equation}
+\alpha^lD\equiv p_1p_2\cdots p_t\mod q
+\text{ ,}
+\end{equation}
+where each $p_i$ should be "small", for example $\leq q^\frac{1}{k}$. If the discrete logs $x_i$ of each $q_i$ were known, we could compute $E$ with
+\begin{equation}
+E = \left(\sum_{i=1}^{t}x_i\right)-l \mod q
+\text{ .}
+\end{equation}
+Finding the log for a certain $p_i$ is a similar procedure as the precomputation, where we computed the logs of factors of $\alpha$. We need to find a suitable polynomial that can be used to express relations between $p_i$ and the factor base $\mathcal{B}'$ in form of linear equations. These equations can also be found by sieving through co-prime pairs $(c,d)$ and cancelling out factors not in $\mathcal{B}'$. This gives us the desired result where $p_i$ can be represented by factors in $\mathcal{B}'$, i.e.
+\begin{equation}
+p_i \equiv \prod_{s\in\mathcal{B}'}s^{z'_s} \mod q
+\end{equation}
+and thus
+\begin{equation}
+\log_{\alpha}p_i = \sum_{s\in\mathcal{B}'}z'_s\log_{\alpha}s \mod (q-1)
+\text{ ,}
+\end{equation}
+where $z'_s$ is some term that come from intermediate calculation step that I neglected for simplicity. As described above, the private key $E$ can now be calculate from $\log_{\alpha}p_i$'s.
+
 %----------------------------------------------------------------------------------------
 %	The Logjam Attack
 %----------------------------------------------------------------------------------------

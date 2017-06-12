@@ -17,7 +17,8 @@
 \contentsline {paragraph}{\nonumberline Step 3}{8}
 \contentsline {paragraph}{\nonumberline Step 4}{8}
 \contentsline {subsubsection}{\numberline {3.2.5}Results}{9}
-\contentsline {section}{\numberline {4}The Logjam Attack}{9}
-\contentsline {section}{\numberline {5}Other Attacks}{9}
-\contentsline {section}{\numberline {6}Pohling-Hellman Algorithm}{9}
-\contentsline {section}{\numberline {7}Discussion}{9}
+\contentsline {subsection}{\numberline {3.3}Individual Log Calculation}{9}
+\contentsline {section}{\numberline {4}The Logjam Attack}{10}
+\contentsline {section}{\numberline {5}Other Attacks}{10}
+\contentsline {section}{\numberline {6}Pohling-Hellman Algorithm}{10}
+\contentsline {section}{\numberline {7}Discussion}{10}
