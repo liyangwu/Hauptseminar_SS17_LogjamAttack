@@ -8,6 +8,10 @@ Adrian, D., Bhargavan, K., Durumeric, Z., Gaudry, P., Green, M., Halderman,
 \newblock In {\em Proceedings of the 22Nd ACM SIGSAC Conference on Computer and
   Communications Security}, CCS '15, pages 5--17, New York, NY, USA. ACM.
 
+\bibitem[Dierks, 2008]{dierks2008transport}
+Dierks, T. (2008).
+\newblock The transport layer security (tls) protocol version 1.2.
+
 \bibitem[Diffie and Hellman, 1976]{diffie1976new}
 Diffie, W. and Hellman, M. (1976).
 \newblock New directions in cryptography.
@@ -23,6 +27,12 @@ Joux, A. and Lercier, R. (2003).
 \newblock Improvements to the general number field sieve for discrete
   logarithms in prime fields. a comparison with the gaussian integer method.
 \newblock {\em Mathematics of computation}, 72(242):953--967.
+
+\bibitem[Van~Oorschot and Wiener, 1996]{van1996diffie}
+Van~Oorschot, P.~C. and Wiener, M.~J. (1996).
+\newblock On diffie-hellman key agreement with short exponents.
+\newblock In {\em International Conference on the Theory and Applications of
+  Cryptographic Techniques}, pages 332--343. Springer.
 
 \bibitem[Wiedemann, 1986]{wiedemann1986solving}
 Wiedemann, D. (1986).

@@ -8,17 +8,19 @@
 \citation{diffie1976new}
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{3}}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Diffie-Hellman Key Exchange}{3}}
+\newlabel{sec:DHKeyExchange}{{2}{3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Problem Formulation}{3}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Solutions}{4}}
 \@writefile{toc}{\contentsline {paragraph}{\nonumberline Key Exchange}{4}}
-\newlabel{eqn:keyA}{{2.7}{4}}
-\newlabel{eqn:keyB}{{2.9}{4}}
 \citation{gordon1993discrete}
+\newlabel{eqn:keyA}{{2.7}{5}}
+\newlabel{eqn:keyB}{{2.9}{5}}
 \@writefile{toc}{\contentsline {paragraph}{\nonumberline Cryptanalysis}{5}}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Number Field Sieve Algorithm}{5}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Approach}{5}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Precomputation}{5}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Smoothness Assumption}{5}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Precomputation}{6}}
+\newlabel{subsec:precomputation}{{3.2}{6}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Smoothness Assumption}{6}}
 \newlabel{eqn:assumption}{{3.3}{6}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}Polynomial Selection}{6}}
 \citation{gordon1993discrete}
@@ -26,23 +28,46 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.3}Sieving}{7}}
 \newlabel{eqnSieve1}{{3.7}{7}}
 \newlabel{eqnSieve2}{{3.8}{7}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.4}Linear Algebra}{7}}
-\@writefile{toc}{\contentsline {paragraph}{\nonumberline Step 1}{7}}
 \citation{wiedemann1986solving}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.4}Linear Algebra}{8}}
+\@writefile{toc}{\contentsline {paragraph}{\nonumberline Step 1}{8}}
 \@writefile{toc}{\contentsline {paragraph}{\nonumberline Step 2}{8}}
 \@writefile{toc}{\contentsline {paragraph}{\nonumberline Step 3}{8}}
-\@writefile{toc}{\contentsline {paragraph}{\nonumberline Step 4}{8}}
-\citation{joux2003improvements}
+\@writefile{toc}{\contentsline {paragraph}{\nonumberline Step 4}{9}}
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.5}Results}{9}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Individual Log Calculation}{9}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}The Logjam Attack}{10}}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Other Attacks}{10}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Pohling-Hellman Algorithm}{10}}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Discussion}{10}}
+\newlabel{subsec:indiviualLogCalculation}{{3.3}{9}}
+\citation{joux2003improvements}
+\citation{dierks2008transport}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Transport Layer Security}{10}}
+\newlabel{sec:tls}{{4}{10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Hello Messages}{10}}
+\@writefile{toc}{\contentsline {paragraph}{\nonumberline Hello Request}{10}}
+\@writefile{toc}{\contentsline {paragraph}{\nonumberline Client Hello}{10}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4.1}{\ignorespaces The message flow diagram of the TLS handshake, abbreviated.}}{11}}
+\newlabel{fig:tls}{{4.1}{11}}
+\@writefile{toc}{\contentsline {paragraph}{\nonumberline Server Hello}{11}}
+\@writefile{toc}{\contentsline {paragraph}{\nonumberline Server Hello Done}{11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Certification}{11}}
+\@writefile{toc}{\contentsline {paragraph}{\nonumberline Certificate Request}{11}}
+\@writefile{toc}{\contentsline {paragraph}{\nonumberline Client Certificate}{11}}
+\citation{Adrian:2015:IFS:2810103.2813707}
+\citation{van1996diffie}
+\@writefile{toc}{\contentsline {paragraph}{\nonumberline Certificate Verification}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Key Exchange}{12}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Finished}{12}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}The Logjam Attack}{12}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Exploiting Use of short Exponents}{13}}
+\@writefile{toc}{\contentsline {paragraph}{\nonumberline Pollard lambda}{13}}
+\@writefile{toc}{\contentsline {paragraph}{\nonumberline Pohlig-Hellman Decomposition}{13}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Security of 1024 bit Groups}{14}}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Discussion}{14}}
 \bibstyle{apalike}
 \bibdata{literature}
 \bibcite{Adrian:2015:IFS:2810103.2813707}{{1}{2015}{{Adrian et~al.}}{{}}}
-\bibcite{diffie1976new}{{2}{1976}{{Diffie and Hellman}}{{}}}
-\bibcite{gordon1993discrete}{{3}{1993}{{Gordon}}{{}}}
-\bibcite{joux2003improvements}{{4}{2003}{{Joux and Lercier}}{{}}}
-\bibcite{wiedemann1986solving}{{5}{1986}{{Wiedemann}}{{}}}
+\bibcite{dierks2008transport}{{2}{2008}{{Dierks}}{{}}}
+\bibcite{diffie1976new}{{3}{1976}{{Diffie and Hellman}}{{}}}
+\bibcite{gordon1993discrete}{{4}{1993}{{Gordon}}{{}}}
+\bibcite{joux2003improvements}{{5}{2003}{{Joux and Lercier}}{{}}}
+\bibcite{van1996diffie}{{6}{1996}{{Van~Oorschot and Wiener}}{{}}}
+\bibcite{wiedemann1986solving}{{7}{1986}{{Wiedemann}}{{}}}

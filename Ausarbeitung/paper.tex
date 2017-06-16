@@ -38,6 +38,7 @@
 }
 
 \usepackage[square]{natbib}
+\usepackage{graphicx}
 
 \pagestyle{fancyplain} % Makes all pages in the document conform to the custom headers and footers
 \fancyhead{} % No page header - if you want one, create it in the same way as the footers below
@@ -85,7 +86,7 @@
 %----------------------------------------------------------------------------------------
 \section*{Abstract}
 \begin{abstract}
-\citep{Adrian:2015:IFS:2810103.2813707} developed a new attack called Logjam to break many cryptographic systems using the Diffie-Hellman key exchange mechanism. This review elucidates its technical details and summarize overall results of their paper.
+In the field of study of security for computer networks, \citep{Adrian:2015:IFS:2810103.2813707} developed a new attack called Logjam to break many cryptographic systems that use Diffie-Hellman key exchange mechanism, where TLS 1.2 was the current standard at that time to establish secure end-to-end connections. This work elucidates technical details of the background for Logjam, in particular Diffie-Hellman key exchange, Number Field Sieve algorithm and TLS handshake, and summarizes the overall results.
 \end{abstract}
 %----------------------------------------------------------------------------------------
 %	INTRODUCTION
@@ -98,6 +99,7 @@ The second result the authors present is an estimate on cost of computing logs f
 %	Diffie-Hellman Key Exchange
 %----------------------------------------------------------------------------------------
 \section{Diffie-Hellman Key Exchange}
+\label{sec:DHKeyExchange}
 \citep{diffie1976new} was the first paper presenting a practical solution to the privacy and the authentication problem that does not rely on secure communication channels. These kinds of channels are often not given or so inefficient to use that the benefit of telecommunication is nullified. Hence, it was a historical and great advance in computer networking and cryptography. They presented an asymmetric approach with trap door functions that have an exponential cipher-cryptanalyst ratio. Because of this, a security system can choose feasible large private keys that are at the same time infeasible to infer from public keys and encrypted messages w.r.t. computation time.
 \subsection{Problem Formulation}
 Given:
@@ -126,7 +128,7 @@ Determine:
 
 \subsection{Solutions}
 \paragraph{Key Exchange}
-The solution the authors propose is to draw private and public keys $(D,E)$ from finite fields of sizes equal to prime numbers $\mathrm{GF}(q)\cong\mathbb{Z}/q\mathbb{Z}$, i.e.
+The solution the authors propose is to draw private and public keys $(D,E)$ from finite fields $\mathrm{GF}(q)\cong\mathbb{Z}/q\mathbb{Z}$, i.e.
 \begin{equation}
 D, E \in \mathrm{GF}(q) = \{x \mod q \mid x \in \mathbb{Z}\}.
 \end{equation}
@@ -138,7 +140,7 @@ E = \log_\alpha Y \mod q,\\
 \end{eqnarray}
 the requirements 3. and 4. are fulfilled. Calculating $D$ from $E$ has logarithmic time complexity in $q$. Inversely, calculating $E$ from $D$ has a complexity of $\sqrt{q}$. Therefore the cipher-cryptanalyst ratio is exponential. Note that this is not a proven bound. We use the best known algorithms for these problem to get this ratio. Better algorithms have not been found for decades, therefore this method is considered safe. Also, one need to find good primes $q$ in order to assure worst or near worst case log-computation time.
 
-Now if $A$ and $B$ want to exchange a session key, they first choose public and private keys $D_A$, $D_B$, $E_A$, $E_B$ with a $q$ of sufficient size and exchange their public keys over the insecure communication channel. Then, they can calculate the common session key
+Now if $A$ and $B$ want to exchange a session key, they first choose public and private keys $D_A$, $D_B$, $E_A$, $E_B$ from a number field $\mathrm{GF}(q)$ with a sufficient size $q$ and send each other their public keys over the insecure communication channel. Then, they can calculate the common session key
 \begin{eqnarray}
 K_{A,B} & = & \alpha^{E_AE_B} \mod q\\
 & = & (\alpha^{E_A})^{E_B} \mod q\\
@@ -148,7 +150,7 @@ K_{A,B} & = & \alpha^{E_AE_B} \mod q\\
 \end{eqnarray}
 While $A$ calculates the right term in \ref{eqn:keyA}, $B$ calculates the right term in \ref{eqn:keyB} and both of them have now the same session key $K_{A,B}$.
 
-The trap-door property of this mechanism allows us to use it for one-way authentication. A signature $s$ of some user $A$ is $D_A(s)$. No one can forge it, since $D_A$ is private. $A$ cannot deny his or her signature, since everyone can confirm $E_A(D_A(s)) = s$.
+Because of the trap-door property of this mechanism, it allows us to use it for one-way authentication. A signature $s$ of some user $A$ is $E_A(s)$. No one can forge it, since $E_A$ is private. $A$ cannot deny his or her signature, since everyone can confirm $D_A(E_A(s)) = s$.
 
 \paragraph{Cryptanalysis}
 The attacker can compute $K_{A,B}$ either by computing $E_A$ from $D_B$ or $E_B$ from $D_A$, both are log-problems in finite fields. Thus, the attacker is successful, iff he or she can effort exponentially more computation power that $A$ and $B$.
@@ -162,10 +164,11 @@ As described above, the only known way to break Diffie-Hellman is to compute $E$
 \subsection{Approach}
 The idea is to factorize $D$ and find logs for each of these factors. The logs of these factors can be constructed by the logs of some precomputed logs in the database. This step can be done very efficiently. The difficult problem is to build up such a database for the prime of interest $q$. But the good thing is that this precomputation only depends on $q$ and not on a specific problem instance $D$. Once the precomputation is done, the database can be used to compute the log for every $D\in \mathrm{GF}(q)$.
 
-The algorithm for NFS in general is technically difficult to understand. That means there are many mathematical objects we must deal with and keep in mind at the same time. For simplicity I neglected some details for a better reading, while the drawback is that I need to refer to the original paper from time to time.
+The algorithm for NFS in general is technically difficult to understand. This means that there are many mathematical objects we must deal with and keep in mind at the same time. For simplicity I neglected some details for a better reading, while the drawback is that I cannot show all intermediate steps and instead need to refer to the original paper from time to time.
 
 \subsection{Precomputation}
-The precomputation consists of three steps. In Polynomial Selection, we find an appropriate representation for $\mathrm{GF}(q)$. Using this representation, we find equations that relate certain numbers with smaller primes in $\mathrm{GF}(q)$ in the Sieving step. These equations form matrices that can be used to find relations that lead to the logs of the base $\alpha$ in the Linear Algebra step. But first, one assumption must be made on $\alpha$.
+\label{subsec:precomputation}
+The precomputation consists of three steps. In Polynomial Selection, we find an appropriate polynomial representation for $\mathrm{GF}(q)$. Using this representation, we find equations that relate certain numbers with smaller primes in $\mathrm{GF}(q)$ in the Sieving step. These equations form matrices that can be used to find relations that lead to the logs of the base $\alpha$ in the Linear Algebra step. But first, one assumption must be made on $\alpha$.
 
 \subsubsection{Smoothness Assumption}
 Define that an integer number $x$ is $B$-smooth, if all prime factors of $x$ are smaller that $B$. NFS assumes the base $\alpha$ to be $B$-smooth where $B$ is an upper bound for the prime values in the factor base (which is the output of the precomputation). If $\alpha$ is not $B$-smooth, we can use a $B$-smooth $\alpha'$ instead. Then, we can compute $\log_{\alpha'}\alpha$ and transform back to the original problem with
@@ -189,16 +192,16 @@ otherwise we gain no knowledge from the factor base.
 \subsubsection{Polynomial Selection}
 The goal in the first step is to find a polynomial representation of $\mathrm{GF}(q)$. This has the advantage that we can express relations and encode informations in terms of linear equations to reason about them, which are the tasks that actually will be done in the next steps.
 
-First, we represent $\mathrm{GF}(q)$ as $\mathbb{Z}/q\mathbb{Z}$ where elements are identified with their least non-negative residues. Then, choose and integer $m$ and polynomial $f:\mathbb{Z}\rightarrow\mathbb{Z}$ of degree $k$ such that $f$ is monic, irreducible over $\mathbb{Q}$ and $f(m)\equiv 0 \mod q$. We can find such a polynomial $f$ by choosing $m$ of suitable size and find coefficients $a_1,...,a_k$ such that
+First, we represent $\mathrm{GF}(q)$ as $\mathbb{Z}/q\mathbb{Z}$ where elements are identified with their least non-negative residues. Then, choose an integer $m$ and polynomial $f:\mathbb{Z}\rightarrow\mathbb{Z}$ of degree $k$ such that $f$ is monic, irreducible over $\mathbb{Q}$ and $f(m)\equiv 0 \mod q$. We can find such a polynomial $f$ by choosing $m$ of suitable size and find coefficients $a_1,...,a_k$ such that
 \begin{eqnarray}
-p = \sum_{i=0}^{k}a_im^i
+q = \sum_{i=0}^{k}a_im^i
 \text{ .}
 \end{eqnarray}
 It is required that $q\nmid\Delta_f$, where $\Delta_f$ is the discriminant of $f$. If the choice of $f$ or $m$ leads to $q\mid\Delta_f$, then try another $m$ or alter $f$ slightly, for example add $m$ to $a_i$ and subtract $1$ from $a_{i+1}$.
 
 Next, let $\gamma\in\mathbb{C}$ be the root of $f$, define $K = \mathbb{Q}(\gamma) = \mathbb{Q}\cup\{\gamma\}$ and $O_K$ the ring of integers in $K$. Since $(q,\Delta_f) = 1$, $\hat{q}:=(q,\gamma-m)$ is a first-degree prime factor of $q\in O_K$. It follows that $O_K/\hat{q}\cong\mathrm{GF}(q)$ and we can define a homomorphism $\phi:\mathbb{Z}[\alpha]\rightarrow\mathbb{Z}/q\mathbb{Z}$, providing us the representation we aimed for. We denote a prime ideal $s\in O_K$ as \textit{good} if $s$ does not divide the index $[O_K:\mathbb{Z}[\gamma]]$, otherwise \textit{bad}.
 
-The actual factor base $\mathcal{B}$ for which we want to find the logarithms consists of two parts: $\mathcal{B}_\mathbb{Q}$ the set of rational primes and $\mathcal{B}_K$ the set of good prime ideals in $O_K$, where $p,\Vert p'\Vert_1\leq B,\ \forall p\in\mathcal{B}_\mathbb{Q},p'\in\mathcal{B}_K$. Note that $B$ is the same bound for our base $\alpha$ (from our primary problem definition: Find $E$ for $D=\alpha^E\mod q$). Also, let $\mathcal{B}'\subset\mathcal{B}_\mathbb{Q}$ denote the set of prime factors of $\alpha$.
+The actual factor base $\mathcal{B}$ for which we want to find the logarithms consists of two parts: $\mathcal{B}_\mathbb{Q}$ the set of rational primes and $\mathcal{B}_K$ the set of good prime ideals in $O_K$, where all of these elements are bounded in size, i.e. $p,\Vert p'\Vert_1\leq B,\ \forall p\in\mathcal{B}_\mathbb{Q},p'\in\mathcal{B}_K$. Note that $B$ is the same bound for our base $\alpha$ (from our primary problem definition: Find $E$ for $D=\alpha^E\mod q$). Also, let $\mathcal{B}'\subset\mathcal{B}_\mathbb{Q}$ denote the set of prime factors of $\alpha$.
 
 \subsubsection{Sieving}
 In this step we try to find linear equations that are informative in the sense that they are related to the the logarithms in $\mathcal{B}$. For that, sieve through integer pairs $(c,d)$ that are co-prime for which $c+dm$ and $c+d\gamma$ are $S$-smooth where $S = \prod_{s\in\mathcal{B}_\mathbb{Q}}$. For this smoothness criteria, we can formulate equations
@@ -223,7 +226,7 @@ and
 c+d\gamma = \prod_{\hat{s}\in\mathcal{B}_K}\hat{s}^{v_{\hat{s}}(c,d)}
 \text{ .}
 \end{eqnarray}
-Repeats the steps described so far to find more pairs $(c,d)$ to build equations \ref{eqnSieve1} and \ref{eqnSieve2} until we have at least $|\mathcal{B}|$ of these equations. For each equation, build a matrix, where its rows are the $w_s$'s and $v_{\hat{s}}$'s, we call this set $\mathcal{A}$. We modify $\mathcal{A}$ by extracting only those columns where elements are in $\mathcal{B}-\mathcal{B}'$. This means, we are only interested in solutions for primes $s\in\mathcal{B}'$. $\mathcal{A}$ is now the input for the next step.
+Repeat the steps described so far to find more pairs $(c,d)$ to build equations \ref{eqnSieve1} and \ref{eqnSieve2} until we have at least $|\mathcal{B}|$ of these equations. For each equation, build a matrix, where its rows are the $w_s$'s and $v_{\hat{s}}$'s, we call this set $\mathcal{A}$. We modify $\mathcal{A}$ by extracting only those columns where elements are in $\mathcal{B}-\mathcal{B}'$. This means, we are only interested in solutions for primes $s\in\mathcal{B}'$. $\mathcal{A}$ is now the input for the next step.
 
 \subsubsection{Linear Algebra}
 For each $A \in \mathcal{A},\ A = \mathbb{Z}^{S\times T},\ S > T$, where each row has at most $E$ non-zero entries, find a linear relation over $\mathbb{Q}$ for the rows of $A$. This is accomplished in four steps, shown for the case $S=T+1$. This procedure was developed by Carl Pomerance (*1944) which was not separately published, instead only for helping out in \citep{gordon1993discrete}.
@@ -242,7 +245,7 @@ a'_{T\!+\!11} & a'_{T\!+\!12} & \cdots & a'_{T\!+\!1T} \\
 \end{pmatrix}
 \text{ .}
 \end{equation}
-The result of the Gaussian elimination provide a submatrix $\hat{A} = \mathbb{Z}^{r_0\times r_0}$ of the first $r_0$ rows that is nonsingular mod $q_0$,
+The result of the Gaussian elimination provide a submatrix $\hat{A} = \mathbb{Z}^{r_0\times r_0}$ of the first $r_0$ rows and columns that is nonsingular mod $q_0$,
 \begin{equation}
 \hat{A} =
 \begin{pmatrix}
@@ -257,7 +260,7 @@ a'_{r_01} & a'_{r_02} & \cdots & a'_{r_0r_0} \\
 \end{pmatrix}
 \text{ .}
 \end{equation}
-\paragraph{Step 2} Attempt to express $v_{r_0+1}$ as a linear combination of $v_1,v_2,...,v_{r_0}\mod q$ for each $q\leq ET\log T$. For some $q$ it will be successful, for others not. Denote the product of all successful primes as $\boldsymbol{P}$ and the product of all unsuccessful primes as $\boldsymbol{P'}$. If $\boldsymbol{P'} > ET\log T$, then repeat Step 1 (sample a new random prime number). Otherwise, continue with the next step.
+\paragraph{Step 2} Attempt to express $v_{r_0+1}$ as a linear combination of $v_1,...,v_{r_0}\mod q$ for each $q\leq ET\log T$. For some $q$ it will be successful, for others not. Denote the product of all successful primes as $\boldsymbol{P}$ and the product of all unsuccessful primes as $\boldsymbol{P'}$. If $\boldsymbol{P'} > ET\log T$, then repeat Step 1 (sample a new random prime number). Otherwise, continue with the next step.
 \paragraph{Step 3} Attempt to find the determinant $D$ of $\hat{A}$. For each prime $q|\boldsymbol{P}$, use the Wieldemann's probabilistic determinant algorithm \citep{wiedemann1986solving} to compute an integer $D_q\in\{0,...,q-1\}$, which is the determinant of $A\mod q$ with probability of at least $1-(ET)^{-2}$, i.e.
 \begin{equation}
 \mathbb{P}(D_q = \det(A\mod q)\mid A,q) \geq 1-(ET)^{-2}
@@ -309,9 +312,8 @@ Taking the log, we have
 \end{equation}
 With more than $|\mathcal{B}'|$ such congruences, we can solve these with equation \ref{eqn:assumption} and obtain the logs for all primes $s\in\mathcal{B}'$.
 
-Note that improved versions of this algorithm exist, such as \citep{joux2003improvements}.
-
 \subsection{Individual Log Calculation}
+\label{subsec:indiviualLogCalculation}
 Now that we have our database ready, we can calculate a private key $E$ given $D$. The first step is to find a sort of a decomposition of $D$ by sampling random integers $l\in{1,..,q-1}$ until we have found an $l$ that satisfies
 \begin{equation}
 \alpha^lD\equiv p_1p_2\cdots p_t\mod q
@@ -331,24 +333,112 @@ and thus
 \log_{\alpha}p_i = \sum_{s\in\mathcal{B}'}z'_s\log_{\alpha}s \mod (q-1)
 \text{ ,}
 \end{equation}
-where $z'_s$ is some term that come from intermediate calculation step that I neglected for simplicity. As described above, the private key $E$ can now be calculate from $\log_{\alpha}p_i$'s.
+where $z'_s$ is some term that come from intermediate calculation steps that I neglected for simplicity. As described above, the private key $E$ can now be calculate from $\log_{\alpha}p_i$'s.
+
+Note that improved versions of the NFS algorithm for logarithm calculation exist, such as the one proposed in \citep{joux2003improvements}.
+%----------------------------------------------------------------------------------------
+%	Transport Layer Security
+%----------------------------------------------------------------------------------------
+\section{Transport Layer Security}
+\label{sec:tls}
+The document \citep{dierks2008transport} presents the full Transport Layer Security (TLS) protocol specification. I summarize the handshake section from there because the Logjam attack exploits the protocol flaw exactly here. An abbreviated message flow diagram is shown in Figure \ref{fig:tls}.
+\begin{figure*}[h]
+	\centering
+	\includegraphics[width=10cm]{../Grafiken/TLS/tls}
+	\caption{The message flow diagram of the TLS handshake, abbreviated.}
+	\label{fig:tls}
+\end{figure*}
+\subsection{Hello Messages}
+These messages initiate the handshake and exchange information about which cipher methods are supported on each side.
+\paragraph{Hello Request} This message is optional and can be sent by the server at any time. The meaning is that the server wishes to renegotiate the connection. It expects to receive the \verb|ClientHello| message next.
+\paragraph{Client Hello} With this message, the client wants to establish or re-establish a connection to the server. Several information are sent that are used for negotiation. The \verb|client_version| tells which TLS is used by the client. A random structure that consists of a time stamp and some random bytes are typically used for security checks, for example avoiding replay attacks. The client also offers a list of cipher and compression methods the server can choose from. It can use a session id to reuse security agreements from earlier or other session to abbreviate the handshake.
+\paragraph{Server Hello} The server replies symmetrically by sending an \verb|server_version| which is lower or equals the \verb|client_version| and also a random structure that must not depend on the client's random structure. It selects the algorithms for cipher and compression. If none of these algorithms match, the handshake fails. If the client wished to reuse a session, the server sends the same session id back, otherwise generates a new one.
+\paragraph{Server Hello Done}
+This message indicates the end of a \verb|ServerHello| message, because its parameters does not have fixed length. The client should check all these parameter and also the server's certificate.
+
+\subsection{Certification}
+\paragraph{Certificate Request}
+The server can request a certificate from the client if this is provided from the security method used. There are specific certificate types for the Diffie-Hellman key exchange method. The client needs to sign its certificate and make sure that the type matches the required one.
+\paragraph{Client Certificate}
+When the Server sent its \verb|ServerHelloDone| message and requests a certificate, the client sends this message. When there are no suitable certificates available, the content of this message should be empty. Then, the server decides to continue or to deny the handshake.
+\paragraph{Certificate Verification}
+When the server receives the certificate from the client, which turns out to be valid, the server sends this message to confirm the acknowledgement.
+
+\subsection{Key Exchange}
+TLS supports RSA and DH encryption. After the client has sent its certificate or, if it was necessary, after \verb|ServerHelloDone| was received, the client sends its public key to the server. The procedure for exchanging the session key basically goes according to Section \ref{sec:DHKeyExchange}.
+
+\subsection{Finished}
+These messages are the last ones in the handshake phase and the first ones that are encrypted with the newly exchanged session key. One participant sends a some encrypted content and the other answers with a proof that it can read the content, thus the handshake was successful. Now application data can be send supposedly safe.
 
 %----------------------------------------------------------------------------------------
 %	The Logjam Attack
 %----------------------------------------------------------------------------------------
 \section{The Logjam Attack}
+The previous Sections explained the background for the Logjam attack more in detail than in the original work \citep{Adrian:2015:IFS:2810103.2813707}. Now I summarize the attack in short to see how everything comes together.
 
+For preparation, use NFS precomputation to build log databases for some commonly used 512 bit primes (Section \ref{subsec:precomputation}). When the handshake (Section \ref{sec:tls}) we want to attack begins, catch the \verb|ClientHello| message as man in the middle and rewrite the offered cipher suit such that it only contains all weak ($\leq$ 512 bit) DH methods supported by the server. Since the client expects the server to choose from a strong cipher suit, we need to rewrite the \verb|ServerHello| message and replace the fake cipher suit with one that is strong but methodically matches the fake one. When keys are exchanged (Section \ref{sec:DHKeyExchange}), the client cannot detect any problem because the structure of these messages are the same regardless of which prime field is used. In the last step of the handshake, it is checked via \verb|Finished| messages whether the communication partner knows the secret. The attacker computes the secret (Section \ref{subsec:indiviualLogCalculation}) and replies accordingly. The client now beliefs that the attacker is the server and thereby lost its security.
 
-
-%----------------------------------------------------------------------------------------
-%	Other Attacks
-%----------------------------------------------------------------------------------------
-\section{Other Attacks}
+The success of this attack depends on whether the servers being attacked support number fields of small primes or not. During the experiment it turned out that actually many servers do support those and some of them are even certificated being secure.
 
 %----------------------------------------------------------------------------------------
-%	Other Attacks
+%	Pohling-Hellman Algorithm
 %----------------------------------------------------------------------------------------
-\section{Pohling-Hellman Algorithm}
+\section{Exploiting Use of short Exponents}
+Some application designers optimize the computation speed of $\alpha^E$ by choosing small $E$'s. This this can be unsafe, if the the prime $q$ is not chosen safe, which means that the subgroup generated by $\alpha$ in $\mathrm{GF}(q)$ has small factors. The authors of the Logjam attack also implemented an attack proposed by \citep{van1996diffie} and performed it on servers that have this weakness. This algorithm combines the Pollard's lambda method with Pohlig-Hellman decomposition. In the following, these two methods are described, before presenting the attack.
+
+\paragraph{Pollard lambda} This method is a randomized one that solves a special case of the log problem $D = \alpha^E\mod q$, where the solution $E$ is known to be in range $b<E<b+w$ for some $b,w\in \mathbb{N}$. Using some random function $f:\mathbb{N}\rightarrow R$, two sequences of numbers are generated:
+\begin{equation}
+\begin{array}{lcl}
+T & = & (y_0',...,y_N'),\\
+W & = & (y_0,...,y_M)
+\text{ .}
+\end{array}
+\end{equation}
+Sequence $T$ starts with the value $y_0' = g^{b+w}$ and generate its sequence by $y_{i+1}' = y_i'\cdot g^{f(y_i')}$. For $W$, $y_0 = D$ and $y_{i+1} = y_i\cdot g^{f(y_i)}$. The log distance between $y_0'$ and $y_N'$,
+\begin{equation}
+\log_\alpha(y_N') = \log_\alpha(y_0') + d_N'
+\text{ ,}
+\end{equation}
+is
+\begin{equation}
+d_N' = \sum_{i=0}^{N'-1}f(y_i')\mod (q-1)
+\text{ .}
+\end{equation}
+and for $W$ analogously. The $T$ sequence stops at some $N$, while the $W$ sequence stops if there is a hit at some point $M$ such that $y_M = y_N'$ or if $d_M$ exceeds $w+d_N'$. In the first case, the solution
+\begin{equation}
+E = b + w + d_N' - d_M \mod (q-1)
+\end{equation}
+is found. Otherwise this iteration failed and we need to restart again.
+
+\paragraph{Pohlig-Hellman Decomposition} This method reduces the complexity of the log problem by reducing the size of the problem instance. The idea is to find a good way to infer the original logarithm from smaller logarithms efficiently. Then, the remaining problem is to use existing methods to compute these smaller logarithms. However, the requirement is that the prime power factorization
+\begin{equation}
+q-1 = \prod_{i=1}^v p_i^{c_i}
+\end{equation}
+is given. The procedure involve two steps. First, compute $D^{\frac{n}{p_i^{c_i}}},\ i=1..v$. Denote $D':= D^{\frac{n}{p_i^{c_i}}}$ and $\alpha' := \alpha^{\frac{n}{p_i^{c_i}}}$. Because
+\begin{equation}
+D' = \alpha'^E
+\text{ ,}
+\end{equation}
+the reduces problem definition is now
+\begin{equation}
+D' = \alpha'^{x_i} \mod (p_i),\quad i=1..v
+\text{ .}
+\end{equation}
+Compute, for example with Pollard lambda method, each $x_i$. With the Chinese remainder theorem we can compute $E$ with the congruences
+\begin{equation}
+E \equiv x_i \mod p_i
+\text{ ,}
+\end{equation}
+because
+\begin{equation}
+\prod_{i=1}^v p_i^{c_i} = q-1
+\text{ .}
+\end{equation}
+
+%----------------------------------------------------------------------------------------
+%	Pohling-Hellman Algorithm
+%----------------------------------------------------------------------------------------
+\section{Security of 1024 bit Groups}
 
 %----------------------------------------------------------------------------------------
 %	DISCUSSION
