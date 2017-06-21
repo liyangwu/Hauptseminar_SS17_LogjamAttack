@@ -1,38 +1,40 @@
 \select@language {english}
-\contentsline {section}{\numberline {1}Introduction}{3}
-\contentsline {section}{\numberline {2}Diffie-Hellman Key Exchange}{3}
-\contentsline {subsection}{\numberline {2.1}Problem Formulation}{3}
-\contentsline {subsection}{\numberline {2.2}Solutions}{4}
-\contentsline {paragraph}{\nonumberline Key Exchange}{4}
-\contentsline {paragraph}{\nonumberline Cryptanalysis}{5}
-\contentsline {section}{\numberline {3}Number Field Sieve Algorithm}{5}
-\contentsline {subsection}{\numberline {3.1}Approach}{5}
-\contentsline {subsection}{\numberline {3.2}Precomputation}{6}
-\contentsline {subsubsection}{\numberline {3.2.1}Smoothness Assumption}{6}
-\contentsline {subsubsection}{\numberline {3.2.2}Polynomial Selection}{6}
-\contentsline {subsubsection}{\numberline {3.2.3}Sieving}{7}
-\contentsline {subsubsection}{\numberline {3.2.4}Linear Algebra}{8}
-\contentsline {paragraph}{\nonumberline Step 1}{8}
-\contentsline {paragraph}{\nonumberline Step 2}{8}
-\contentsline {paragraph}{\nonumberline Step 3}{8}
-\contentsline {paragraph}{\nonumberline Step 4}{9}
-\contentsline {subsubsection}{\numberline {3.2.5}Results}{9}
-\contentsline {subsection}{\numberline {3.3}Individual Log Calculation}{9}
-\contentsline {section}{\numberline {4}Transport Layer Security}{10}
-\contentsline {subsection}{\numberline {4.1}Hello Messages}{10}
-\contentsline {paragraph}{\nonumberline Hello Request}{10}
+\contentsline {section}{\numberline {1}Introduction}{1}
+\contentsline {section}{\numberline {2}Diffie-Hellman Key Exchange}{1}
+\contentsline {subsection}{\numberline {2.1}Problem Formulation}{2}
+\contentsline {subsection}{\numberline {2.2}Solutions}{3}
+\contentsline {paragraph}{\nonumberline Key Exchange}{3}
+\contentsline {paragraph}{\nonumberline Cryptanalysis}{3}
+\contentsline {section}{\numberline {3}Number Field Sieve Algorithm}{4}
+\contentsline {subsection}{\numberline {3.1}Approach}{4}
+\contentsline {subsection}{\numberline {3.2}Precomputation}{4}
+\contentsline {subsubsection}{\numberline {3.2.1}Smoothness Assumption}{4}
+\contentsline {subsubsection}{\numberline {3.2.2}Polynomial Selection}{5}
+\contentsline {subsubsection}{\numberline {3.2.3}Sieving}{5}
+\contentsline {subsubsection}{\numberline {3.2.4}Linear Algebra}{6}
+\contentsline {paragraph}{\nonumberline Step 1}{6}
+\contentsline {paragraph}{\nonumberline Step 2}{7}
+\contentsline {paragraph}{\nonumberline Step 3}{7}
+\contentsline {paragraph}{\nonumberline Step 4}{7}
+\contentsline {subsubsection}{\numberline {3.2.5}Results}{8}
+\contentsline {subsection}{\numberline {3.3}Individual Log Calculation}{8}
+\contentsline {section}{\numberline {4}Transport Layer Security}{9}
+\contentsline {subsection}{\numberline {4.1}Hello Messages}{9}
+\contentsline {paragraph}{\nonumberline Hello Request}{9}
 \contentsline {paragraph}{\nonumberline Client Hello}{10}
-\contentsline {paragraph}{\nonumberline Server Hello}{11}
-\contentsline {paragraph}{\nonumberline Server Hello Done}{11}
-\contentsline {subsection}{\numberline {4.2}Certification}{11}
-\contentsline {paragraph}{\nonumberline Certificate Request}{11}
-\contentsline {paragraph}{\nonumberline Client Certificate}{11}
-\contentsline {paragraph}{\nonumberline Certificate Verification}{12}
-\contentsline {subsection}{\numberline {4.3}Key Exchange}{12}
-\contentsline {subsection}{\numberline {4.4}Finished}{12}
-\contentsline {section}{\numberline {5}The Logjam Attack}{12}
-\contentsline {section}{\numberline {6}Exploiting Use of short Exponents}{13}
-\contentsline {paragraph}{\nonumberline Pollard lambda}{13}
-\contentsline {paragraph}{\nonumberline Pohlig-Hellman Decomposition}{13}
-\contentsline {section}{\numberline {7}Security of 1024 bit Groups}{14}
-\contentsline {section}{\numberline {8}Discussion}{14}
+\contentsline {paragraph}{\nonumberline Server Hello}{10}
+\contentsline {paragraph}{\nonumberline Server Hello Done}{10}
+\contentsline {subsection}{\numberline {4.2}Certification}{10}
+\contentsline {paragraph}{\nonumberline Certificate Request}{10}
+\contentsline {paragraph}{\nonumberline Client Certificate}{10}
+\contentsline {paragraph}{\nonumberline Certificate Verification}{10}
+\contentsline {subsection}{\numberline {4.3}Key Exchange}{10}
+\contentsline {subsection}{\numberline {4.4}Finished}{11}
+\contentsline {section}{\numberline {5}The Logjam Attack}{11}
+\contentsline {section}{\numberline {6}Exploiting Use of short Exponents}{11}
+\contentsline {subsection}{\numberline {6.1}Pollard lambda}{11}
+\contentsline {subsection}{\numberline {6.2}Pohlig-Hellman Decomposition}{12}
+\contentsline {subsection}{\numberline {6.3}Improved Attack}{13}
+\contentsline {paragraph}{\nonumberline Runtime Complexity}{13}
+\contentsline {section}{\numberline {7}Security of 1024 bit Groups}{13}
+\contentsline {section}{\numberline {8}Conclusion}{14}
