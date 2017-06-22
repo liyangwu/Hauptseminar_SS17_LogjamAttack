@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.5.12)  19 JUN 2017 21:25
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdflatex 2015.5.12)  21 JUN 2017 21:54
 entering extended mode
 **paper.tex
 
@@ -441,7 +441,7 @@ Here is how much of TeX's memory you used:
  9412 multiletter control sequences out of 15000+200000
  48940 words of font info for 91 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 39i,11n,47p,1438b,236s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,11n,47p,1440b,236s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/fontname/8r.enc}<C:/Progra
 m Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cmextra/cmbsy8.pfb><C:/Pro
 gram Files (x86)/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Progr
@@ -462,7 +462,7 @@ type1/urw/helvetic/uhvb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/ur
 w/palatino/uplb8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/palati
 no/uplr8a.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/urw/palatino/uplri
 8a.pfb>
-Output written on paper.pdf (18 pages, 263288 bytes).
+Output written on paper.pdf (18 pages, 263330 bytes).
 PDF statistics:
  142 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

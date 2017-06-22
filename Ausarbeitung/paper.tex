@@ -98,7 +98,7 @@ In the field of study of security for computer networks, \citep{Adrian:2015:IFS:
 \section{Introduction}
 If it comes to network security, Diffie-Hellman key exchange is the standard wildly used in practice and declared to be secure. However, \citep{Adrian:2015:IFS:2810103.2813707} could break the security on many popular and browser certified websites. They demonstrated this so called Logjam attack on the Transfer Level Security protocol that supports Diffe-Hellman as key exchange. They also implemented an attack exploiting the use of small exponents with unsafe primes using a combination of the Pohling-Hellman decomposition and Pollard's lambda method.
 
-Section 2 provide a formal definition of the key exchange problem using asymmetric keys and describes the solution according to \citep{diffie1976new}. In order to break Diffie-Hellman, \citep{gordon1993discrete} first proposed how the Number Field Sieve algorithm can be used to compute logarithms in prime fields. This method is rather complicated and covers a large part of this work in Section 3. While most methods presented here is about cryptography, Section 4 presents the Transport Layer Security, specified in \citep{dierks2008transport}, which is a security protocol used in the transport layer from the OSI model. This model is the most commonly used one that provide a decomposition of a network system into layers, from physical to application level. Section 5 uses the methods from the previous sections to explain Logjam in short. Section 6 presents an attack proposed by \citep{van1996diffie} that exploits a specific kind of bad parameter choices made by system designers when Diffie-Hellman key exchange is used. The second result presented in \citep{Adrian:2015:IFS:2810103.2813707} is an estimate on the cost of computing logs of group elements using 1024 bits primes. I will briefly summarize their assumptions for the estimate and their results in Section 7. A conclusion is drawn about what is necessary to make computer networks more secure in the future in Section 8.
+Section 2 provides a formal definition of the key exchange problem using asymmetric keys and describes the solution according to \citep{diffie1976new}. In order to break Diffie-Hellman, \citep{gordon1993discrete} first proposed how the Number Field Sieve algorithm can be used to compute logarithms in prime fields. This method is rather complicated and covers a large part of this work in Section 3. While most methods presented here is about cryptography, Section 4 presents the Transport Layer Security, specified in \citep{dierks2008transport}, which is a security protocol used in the transport layer from the OSI model. This model is the most commonly used one that provides a decomposition of a network system into layers, from physical to application level. Section 5 uses the methods from the previous sections to explain Logjam in short. Section 6 presents an attack proposed by \citep{van1996diffie} that exploits a specific kind of bad parameter choices made by system designers when Diffie-Hellman key exchange is used. The second result presented in \citep{Adrian:2015:IFS:2810103.2813707} is an estimate on the cost of computing logs of group elements using 1024 bits primes. I will briefly summarize their assumptions for the estimate and their results in Section 7. A conclusion is drawn about what is necessary to make computer networks more secure in the future in Section 8.
 %----------------------------------------------------------------------------------------
 %	Diffie-Hellman Key Exchange
 %----------------------------------------------------------------------------------------
@@ -110,7 +110,7 @@ Given:
 \begin{itemize}
 	\item $A, B$, the communication partners.
 	\item Only insecure communication channels are available.
-	\item $\{M\}$, a finite message space which contain all possible messages $M$ to be exchanged.
+	\item $\{M\}$, a finite message space which contains all possible messages $M$ to be exchanged.
 \end{itemize}
 Determine:
 \begin{itemize}
@@ -155,12 +155,12 @@ K_{A,B} & = & \alpha^{D_AD_B} \mod q\\
 & = & (\alpha^{D_B})^{D_A} \mod q\\
 & = & {E_B}^{D_A} \mod q.\label{eqn:keyB}
 \end{eqnarray}
-While $A$ calculates the right term in \ref{eqn:keyA}, $B$ calculates the right term in \ref{eqn:keyB} and both of them have now the same session key $K_{A,B}$.
+While $A$ calculates the right term in \ref{eqn:keyA}, $B$ calculates the right term in \ref{eqn:keyB} and both of them now have the same session key $K_{A,B}$.
 
 Because of the trap-door property of this mechanism, it allows us to use it for one-way authentication. A signature $s$ of some user $A$ is $D_A(s)$. No one can forge it, since $D_A$ is private. $A$ cannot deny his or her signature, since everyone can confirm $E_A(D_A(s)) = s$.
 
 \paragraph{Cryptanalysis}
-The attacker can compute $K_{A,B}$ either by computing $D_A$ from $E_B$ or $D_B$ from $E_A$, both are log-problems in finite fields. Thus, the attacker is successful iff he or she can effort exponentially more computation power that $A$ and $B$.
+The attacker can compute $K_{A,B}$ either by computing $D_A$ from $E_B$ or $D_B$ from $E_A$, both are log-problems in finite fields. Thus, the attacker is successful iff he or she can afford exponentially more computation power than $A$ and $B$.
 
 %----------------------------------------------------------------------------------------
 %	Number Field Sieve Algorithm
@@ -178,7 +178,7 @@ The algorithm for NFS in general is technically difficult to understand. This me
 The precomputation consists of three steps. In Polynomial Selection, we find an appropriate polynomial representation for $\mathrm{GF}(q)$. Using this representation, we find equations that relate certain numbers with smaller primes in $\mathrm{GF}(q)$ in the Sieving step. These equations form matrices that can be used to find relations that lead to the logs of the base $\alpha$ in the Linear Algebra step. But first, one assumption must be made on $\alpha$.
 
 \subsubsection{Smoothness Assumption}
-Define that an integer number $x$ is $B$-smooth, if all prime factors of $x$ are smaller than $B$. NFS assumes the base $\alpha$ to be $B$-smooth where $B$ is an upper bound for the prime values in the factor base (which is the output of the precomputation). $B$ is restricted by our computation capabilities. If $\alpha$ is not $B$-smooth, we can use a $B$-smooth $\alpha'$ instead. Then, we can compute $\log_{\alpha'}\alpha$ and transform back to the original problem with
+Define that an integer number $x$ is $B$-smooth, if all prime factors of $x$ are smaller than $B$. NFS assumes the base $\alpha$ to be $B$-smooth where $B$ is an upper bound for the prime values in the factor base (which is the output of the precomputation). $B$ is restricted by our computation capabilities. If $\alpha$ is not $B$-smooth, we can use a $B$-smooth $\alpha'$ instead. Then, we can compute $\log_{\alpha'}\alpha$ and formulate our original problem with
 \begin{equation}
 \log_\alpha E\equiv\frac{\log_{\alpha'}E}{\log_{\alpha'}\alpha}\mod (q-1)
 \text{ .}
@@ -206,7 +206,7 @@ q = \sum_{i=0}^{k}a_im^i
 \end{eqnarray}
 It is required that $q\nmid\Delta_f$, where $\Delta_f$ is the discriminant of $f$. If the choice of $f$ or $m$ leads to $q\mid\Delta_f$, then try another $m$ or alter $f$ slightly, for example add $m$ to $a_i$ and subtract $1$ from $a_{i+1}$.
 
-Next, let $\gamma\in\mathbb{C}$ be the root of $f$, define $K = \mathbb{Q}(\gamma) = \mathbb{Q}\cup\{\gamma\}$ and $O_K$ the ring of integers in $K$. Since $\mathrm{gcd}(q,\Delta_f) = 1$, $\hat{q}:=(q,\gamma-m)$ is a first-degree prime factor of $q\in O_K$. It follows that $O_K/\hat{q}\cong\mathrm{GF}(q)$ and we can define a homomorphism $\phi:\mathbb{Z}[\alpha]\rightarrow\mathbb{Z}/q\mathbb{Z}$, providing us the representation we aimed for. We denote a prime ideal $s\in O_K$ as \textit{good} if $s$ does not divide the index $[O_K:\mathbb{Z}[\gamma]]$, otherwise \textit{bad}.
+Next, let $\gamma\in\mathbb{C}$ be the root of $f$, define $K = \mathbb{Q}(\gamma) = \mathbb{Q}\cup\{\gamma\}$ and $O_K$ the ring of integers in $K$. Since $\mathrm{gcd}(q,\Delta_f) = 1$, $\hat{q}:=(q,\gamma-m)$ is a first-degree prime factor of $q\in O_K$. It follows that $O_K/\hat{q}\cong\mathrm{GF}(q)$ and we can define a homomorphism $\phi:\mathbb{Z}[\alpha]\rightarrow\mathbb{Z}/q\mathbb{Z}$, providing us the representation we aimed for. We denote a prime ideal $s\in O_K$ as \textit{good} if $s$ does not divide the index $[O_K:\mathbb{Z}[\gamma]]$, otherwise we denote it as \textit{bad}.
 
 The actual factor base $\mathcal{B}$ for which we want to find the logarithms consists of two parts: $\mathcal{B}_\mathbb{Q}$ the set of rational primes and $\mathcal{B}_K$ the set of good prime ideals in $O_K$, where all of these elements are bounded in size, i.e. $p,\Vert p'\Vert_1\leq B,\ \forall p\in\mathcal{B}_\mathbb{Q},p'\in\mathcal{B}_K$. Note that $B$ is the same bound for our base $\alpha$ (from our primary problem definition: Find $D$ for $E=\alpha^D\mod q$). Also, let $\mathcal{B}'\subset\mathcal{B}_\mathbb{Q}$ denote the set of prime factors of $\alpha$.
 
@@ -252,7 +252,7 @@ a'_{T\!+\!11} & a'_{T\!+\!12} & \cdots & a'_{T\!+\!1T} \\
 \end{pmatrix}
 \text{ .}
 \end{equation}
-The result of the Gaussian elimination provide a submatrix $\hat{A} = \mathbb{Z}^{r_0\times r_0}$ of the first $r_0$ rows and columns that is nonsingular mod $q_0$,
+The result of the Gaussian elimination provides a submatrix $\hat{A} = \mathbb{Z}^{r_0\times r_0}$ of the first $r_0$ rows and columns that is nonsingular mod $q_0$,
 \begin{equation}
 \hat{A} =
 \begin{pmatrix}
@@ -340,7 +340,7 @@ and thus
 \log_{\alpha}p_i = \sum_{s\in\mathcal{B}'}z'_s\log_{\alpha}s \mod (q-1)
 \text{ ,}
 \end{equation}
-where $z'_s$ is some term that come from intermediate calculation steps that I neglected for simplicity. As described above, the private key $D$ can now be calculate from the $\log_{\alpha}p_i$'s.
+where $z'_s$ is some term that comes from intermediate calculation steps that I neglected for simplicity. As described above, the private key $D$ can now be calculated from the $\log_{\alpha}p_i$'s.
 
 Note that improved versions of the NFS algorithm for logarithm calculation exist, such as the one proposed in \citep{joux2003improvements}.
 %----------------------------------------------------------------------------------------
@@ -359,9 +359,9 @@ The document \citep{dierks2008transport} presents the full Transport Layer Secur
 These messages initiate the handshake and exchange information about which cipher methods are supported on each side.
 \paragraph{Hello Request} This message is optional and can be sent by the server at any time. The meaning is that the server wishes to renegotiate the connection. It expects to receive the \verb|ClientHello| message next.
 \paragraph{Client Hello} With this message, the client wants to establish or re-establish a connection to the server. Several information are sent that are used for negotiation. The \verb|client_version| tells which TLS is used by the client. A random structure that consists of a time stamp and some random bytes are typically used for security checks, for example avoiding replay attacks. The client also offers a list of cipher and compression methods the server can choose from. It can use a session id to reuse security agreements from earlier or other session to abbreviate the handshake.
-\paragraph{Server Hello} The server replies symmetrically by sending an \verb|server_version| which is lower or equals the \verb|client_version| and also a random structure that must not depend on the client's random structure. It selects the algorithms for cipher and compression. If none of these algorithms match, the handshake fails. If the client wished to reuse a session, the server sends the same session id back, otherwise generates a new one.
+\paragraph{Server Hello} The server replies symmetrically by sending an \verb|server_version| which is lower or equals the \verb|client_version| and also a random structure that must not depend on the client's random structure. It selects the algorithms for cipher and compression. If none of these algorithms match, the handshake fails. If the client wished to reuse a session, the server sends the same session id back, otherwise it generates a new one.
 \paragraph{Server Hello Done}
-This message indicates the end of a \verb|ServerHello| message, because its parameters does not have fixed length. The client should check all these parameter and also the server's certificate.
+This message indicates the end of a \verb|ServerHello| message, because its parameters do not have fixed lengths. The client should check all these parameters and also the server's certificate.
 
 \subsection{Certification}
 \paragraph{Certificate Request}
@@ -403,7 +403,7 @@ W & = & (y_0,...,y_M)
 \text{ .}
 \end{array}
 \end{equation}
-Sequence $T$ starts with the value $y_0' = g^{b+w}$ and generate the remaining elements as $y_{i+1}' = y_i'g^{f(y_i')}$. For $W$, $y_0 = E$ and $y_{i+1} = y_ig^{f(y_i)}$. The log distance between $y_0'$ and $y_N'$ that set both in the following relation
+Sequence $T$ starts with the value $y_0' = g^{b+w}$ and generates the remaining elements as $y_{i+1}' = y_i'g^{f(y_i')}$. For $W$, $y_0 = E$ and $y_{i+1} = y_ig^{f(y_i)}$. The log distance between $y_0'$ and $y_N'$ that sets both in the following relation
 \begin{equation}
 \log_\alpha(y_N') = \log_\alpha(y_0') + d_N'
 \text{ ,}
@@ -423,7 +423,7 @@ is found. Otherwise this iteration failed and we need to restart this procedure.
 \begin{equation}
 q-1 = \prod_{i=1}^v p_i^{c_i}
 \end{equation}
-is given. The procedure involve two steps. First, compute $E^{\frac{n}{p_i^{c_i}}},\ i=1..v$. Denote $E':= E^{\frac{n}{p_i^{c_i}}}$ and $\alpha' := \alpha^{\frac{n}{p_i^{c_i}}}$. Because
+is given. The procedure involves two steps. First, compute $E^{\frac{n}{p_i^{c_i}}},\ i=1..v$. Denote $E':= E^{\frac{n}{p_i^{c_i}}}$ and $\alpha' := \alpha^{\frac{n}{p_i^{c_i}}}$. Because
 \begin{equation}
 E' = \alpha'^D
 \text{ ,}
@@ -469,7 +469,7 @@ y=g^D=g^{Az+V} & \Rightarrow & A \leq \frac{D}{z}\\
 \end{equation}
 Now we can use Pollard's lambda method to compute $A$, because $A$ is known to lie in a bounded range $\{b,...,b+w\} = \{0,...,2^c\}$, fulfilling the requirement. With $A$ found we also found $D$.
 
-\paragraph{Runtime Complexity} Let $u$ be the number of bits of the binary representation of $D$, i.e. $u = \log D$. Before this method was discovered, the best attack was known to run at $\mathcal{O}(2^{\frac{u}{2}})$ time. This method has overall cost of $\mathcal{O}(2^{\frac{u}{4}})$, which made key exchange systems that expose these properties even more insecure.
+\paragraph{Runtime Complexity} Let $u$ be the number of bits of the binary representation of $D$, i.e. $u = \log D$. Before this method was discovered, the best attack was known to run at $\mathcal{O}(2^{\frac{u}{2}})$ time. This method has an overall cost of $\mathcal{O}(2^{\frac{u}{4}})$, which made key exchange systems that expose these properties even more insecure.
 
 %----------------------------------------------------------------------------------------
 %	Security of 1024 bit Groups
@@ -477,7 +477,7 @@ Now we can use Pollard's lambda method to compute $A$, because $A$ is known to l
 \section{Security of 1024 bit Groups}
 The second part of \citep{Adrian:2015:IFS:2810103.2813707} estimates the cost of attacking DH key exchange with strong 1024 bit groups using NFS, motivated by the leaks from Edward Snowden, a whistle blower and former employee of the \textit{National Security Agency} (NSA). These leaked documents claim that NSA is already breaking cryptographic systems that are considered to be secure.
 
-Based on the most recent records in log computation and factorization at that time, the authors extrapolated a cost of 45 million core-years to do the precomputation for a group using 1024 bit primes and 30 core-days for the descent step. Assuming specialized hardware to do the job, they estimate a cost of \$8M to buy enough hardware to do the computation in one year just for Sieving and another \$11B to buy multiple Titan supercomputer clusters for the Linear Algebra step. This sum is indeed within the budget that the U.S. government planned for a cryptologic program, where the NSA is part of. Additionally, the leaked documents also contain an architecture of the decrypt infrastructure, which is perfectly consistent with NFS breaking Diffie-Hellman.
+Based on the most recent records in log computation and factorization at that time, the authors extrapolated a cost of 45 million core-years to do the precomputation for a group using 1024 bit primes and 30 core-days for individual log computation. Assuming specialized hardware to do the job, they estimate a cost of \$8M to buy enough hardware to do the computation in one year just for Sieving and another \$11B to buy multiple Titan supercomputer clusters for the Linear Algebra step. This sum is indeed within the budget that the U.S. government planned for a cryptologic program, where the NSA is part of. Additionally, the leaked documents also contain an architecture of the decrypt infrastructure, which is perfectly consistent with NFS breaking Diffie-Hellman.
 
 If this estimation is correct, then most servers on the world wide web can be attacked successfully by the NSA, as the documents claim.
 
@@ -485,7 +485,7 @@ If this estimation is correct, then most servers on the world wide web can be at
 %	DISCUSSION
 %----------------------------------------------------------------------------------------
 \section{Conclusion}
-The inventors of Logjam gave recommendations to system designers how to improve the security of their systems due to the success of this attack. Software engineers and cryptography experts need to work together more closely to establish a better sensitivity for security overall. Technically, the most secure groups nowadays are elliptic curves. On top of that, it has a much better cipher-cryptanalyst ratio than "$\mathrm{mod}\ q$"-DH or RSA. But it is mathematically hard to understand, which is why it is not wide spread. This obstacle must be overcome as it is really worth the effort. Insecure legacy systems that support weak groups must be replaced by up-to-date ones, which requires to renew security standards at a much higher rate, where collaboration between service providers and browser developers needs to be intensified. This also counteracts state-level threats that have high resource capacities always ready to perform the latest state-of-art attacks at large scales.
+The inventors of Logjam gave recommendations to system designers on how to improve the security of their systems due to the success of this attack. Software engineers and cryptography experts need to work together more closely to establish a better sensitivity for security overall. Technically, the most secure groups nowadays are elliptic curves. On top of that, it has a much better cipher-cryptanalyst ratio than "$\mathrm{mod}\ q$"-DH or RSA. But it is mathematically hard to understand, which is why it is not wide spread. This obstacle must be overcome as it is really worth the effort. Insecure legacy systems that support weak groups must be replaced by up-to-date ones, which requires to renew security standards at a much higher rate, where collaboration between service providers and browser developers needs to be intensified. This also counteracts state-level threats that have high resource capacities always ready to perform the latest state-of-art attacks at large scales.
 
 %------------------------------------------------
 
@@ -505,7 +505,7 @@ The inventors of Logjam gave recommendations to system designers how to improve 
 
 \vspace{40pt}
 \noindent\begin{tabular}{ll}
-	Stuttgart, 19.06.2017 & \\
+	Stuttgart, 21.06.2017 & \\
 	\makebox[2.5in]{\hrulefill} & \makebox[2.5in]{\hrulefill}\\
 	Ort, Datum & Unterschrift\\[8ex]% adds space between the two sets of signatures
 \end{tabular}
