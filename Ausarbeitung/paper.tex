@@ -206,12 +206,12 @@ q = \sum_{i=0}^{k}a_im^i
 \end{eqnarray}
 It is required that $q\nmid\Delta_f$, where $\Delta_f$ is the discriminant of $f$. If the choice of $f$ or $m$ leads to $q\mid\Delta_f$, then try another $m$ or alter $f$ slightly, for example add $m$ to $a_i$ and subtract $1$ from $a_{i+1}$.
 
-Next, let $\gamma\in\mathbb{C}$ be the root of $f$, define $K = \mathbb{Q}(\gamma) = \mathbb{Q}\cup\{\gamma\}$ and $O_K$ the ring of integers in $K$. Since $\mathrm{gcd}(q,\Delta_f) = 1$, $\hat{q}:=(q,\gamma-m)$ is a first-degree prime factor of $q\in O_K$. It follows that $O_K/\hat{q}\cong\mathrm{GF}(q)$ and we can define a homomorphism $\phi:\mathbb{Z}[\alpha]\rightarrow\mathbb{Z}/q\mathbb{Z}$, providing us the representation we aimed for. We denote a prime ideal $s\in O_K$ as \textit{good} if $s$ does not divide the index $[O_K:\mathbb{Z}[\gamma]]$, otherwise we denote it as \textit{bad}.
+Next, let $\gamma\in\mathbb{C}$ be the root of $f$, define $K = \mathbb{Q}(\gamma) = \mathbb{Q}\cup\{\gamma\}$ and $O_K$ the ring of integers in $K$. Since $\mathrm{gcd}(q,\Delta_f) = 1$, $\hat{q}:=(q,\gamma-m)$ is a first-degree prime factor of $q\in O_K$. It follows that $O_K/\hat{q}\cong\mathrm{GF}(q)$ and we can define a homomorphism $\phi:\mathbb{Z}[\gamma]\rightarrow\mathbb{Z}/q\mathbb{Z}$, providing us the representation we aimed for. We denote a prime ideal $s\in O_K$ as \textit{good} if $s$ does not divide the index $[O_K:\mathbb{Z}[\gamma]]$, otherwise we denote it as \textit{bad}.
 
 The actual factor base $\mathcal{B}$ for which we want to find the logarithms consists of two parts: $\mathcal{B}_\mathbb{Q}$ the set of rational primes and $\mathcal{B}_K$ the set of good prime ideals in $O_K$, where all of these elements are bounded in size, i.e. $p,\Vert p'\Vert_1\leq B,\ \forall p\in\mathcal{B}_\mathbb{Q},p'\in\mathcal{B}_K$. Note that $B$ is the same bound for our base $\alpha$ (from our primary problem definition: Find $D$ for $E=\alpha^D\mod q$). Also, let $\mathcal{B}'\subset\mathcal{B}_\mathbb{Q}$ denote the set of prime factors of $\alpha$.
 
 \subsubsection{Sieving}
-In this step we try to find linear equations that are informative in the sense that they are related to the the logarithms in $\mathcal{B}$. For that, sieve through integer pairs $(c,d)$ that are co-prime for which $c+dm$ and $c+d\gamma$ are $S$-smooth where $S = \prod_{s\in\mathcal{B}_\mathbb{Q}}$. For this smoothness criteria, we can formulate equations
+In this step we try to find linear equations that are informative in the sense that they are related to the the logarithms in $\mathcal{B}$. For that, sieve through integer pairs $(c,d)$ that are co-prime for which $c+dm$ and $c+d\gamma$ are $p$-smooth for at least one $p\in\mathcal{B}_\mathbb{Q}$. For this smoothness criteria, we can formulate equations
 \begin{eqnarray}
 c+dm = \prod_{s\in\mathcal{B}_\mathbb{Q}}s^{w_s(c,d)}
 \end{eqnarray}
